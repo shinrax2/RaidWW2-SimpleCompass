@@ -1,0 +1,20 @@
+<table
+	name="SimpleCompass-RAID"
+	description="Adds simple GTFO-style compass to the game."
+	merge_global = "false"
+	author="shinrax2 and MetroLine"
+	cannot_be_disabled="false"
+	early_init="true"
+>
+		
+	<!-- <auto_updates
+		provider="modworkshop"
+		id="47659"
+		version="1"
+	/> -->
+	<hooks>
+		<hook source_file="lib/managers/hudmanager" file="lua/hudmanager.lua" />
+		<hook source_file="lib/managers/group_ai_states/groupaistatebase" file="lua/groupaistatebase.lua" />
+		<hook source_file="lib/entry" file="Core.lua" type="pre" />
+	</hooks>
+</table>
