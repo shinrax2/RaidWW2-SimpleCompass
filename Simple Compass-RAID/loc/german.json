@@ -1,0 +1,7 @@
+{
+	"menu_simple_compass_title": "Simple Compass",
+
+	"menu_simple_compass_offset_y" : "HUD Y-Versatz",
+	"menu_simple_compass_teammate_visible" : "Team Indikatoren Sichtbar",
+	"menu_simple_compass_team_indicator_width" : "Team Indikatoren Breite"
+}

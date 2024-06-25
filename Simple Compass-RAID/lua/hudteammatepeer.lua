@@ -5,7 +5,7 @@ Hooks:PostHook(HUDTeammatePeer, "set_name", "GTFO_Compass_Set_Peer_Name_Color", 
 
     if panel then
         local color_id = managers.criminals:character_color_id_by_unit(unit)
-        if WolfgangHUD then
+         if WolfgangHUD then
             color_id = WolfgangHUD:character_color_id(unit, self._id)
         end
         local crim_color = tweak_data.chat_colors[color_id] or tweak_data.chat_colors[#tweak_data.chat_colors]

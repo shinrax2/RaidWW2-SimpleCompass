@@ -20,12 +20,13 @@ Hooks:PostHook(GroupAIStateBase, "register_criminal", "GTFO_Compass_Teammate_Pan
 		
 		local teammate_rect = teammate_panel:rect({ -- team dots
 			name = "compass_teammate_rect",
-			w = 5,
+			w = managers.hud._compass.settings.TeamIndicatorWidth,
 			h = 5
 		})
 		
 		teammate_rect:set_center_x(teammate_panel:w() / 2)
 		teammate_rect:set_bottom(teammate_panel:center_y())
+		teammate_rect:set_color(tweak_data.chat_colors[#tweak_data.chat_colors]) -- very hacky fix for teamai dots being white sometimes
 	end
 end)
 

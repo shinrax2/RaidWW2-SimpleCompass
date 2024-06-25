@@ -7,16 +7,23 @@
 	early_init="true"
 >
 		
-	<!-- <auto_updates
+	<auto_updates
 		provider="modworkshop"
-		id="47659"
+		id="48285"
 		version="1"
-	/> -->
+	/>
+
 	<hooks>
 		<hook source_file="lib/managers/hudmanager" file="lua/hudmanager.lua" />
 		<hook source_file="lib/managers/group_ai_states/groupaistatebase" file="lua/groupaistatebase.lua" />
 		<hook source_file="lib/managers/hud/hudteammateai" file="lua/hudteammateai.lua" />
 		<hook source_file="lib/managers/hud/hudteammatepeer" file="lua/hudteammatepeer.lua" />
+		<hook source_file="lib/managers/menu/menucomponentmanager" file="lua/MenuComponentManager.lua" />
 		<hook source_file="lib/entry" file="Core.lua" type="pre" />
 	</hooks>
+
+	<localization directory="loc" default="english.json">
+		<loc file="english.json" language="english" />
+		<loc file="german.json" language="german" />
+	</localization>
 </table>
