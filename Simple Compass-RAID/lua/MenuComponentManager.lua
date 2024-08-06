@@ -29,6 +29,15 @@ function SimpleCompassMenu:Init(root)
         step = 1,
         callback = callback(self, self, "team_indicator_width")
     })
+    self:LongRoundedButton2({
+		name = "reset",
+		text = "menu_simple_compass_reset",
+		localize = true,
+		callback = callback(self, self, "Reset"),
+		ignore_align = true,
+		y = 832,
+		x = 1472,
+	})
 end
 
 function SimpleCompassMenu:Close()
@@ -54,6 +63,31 @@ function SimpleCompassMenu:team_indicator_width(value)
     if managers.hud then
         managers.hud._compass:set_team_indicator_width(value)
     end
+end
+
+function SimpleCompassMenu:Reset(value, item)
+	QuickMenu:new(
+		managers.localization:text("menu_simple_compass_reset"),
+		managers.localization:text("menu_simple_compass_reset_confirm"),
+		{
+			[1] = {
+				text = managers.localization:text("dialog_no"),
+				is_cancel_button = true,
+			},
+			[2] = {
+				text = managers.localization:text("dialog_yes"),
+				callback = function()
+                    SimpleCompass.settings = clone(SimpleCompass.default_settings)
+                    self:ReloadMenu()
+                    SimpleCompass:Save()
+                    self:teammate_visible(SimpleCompass.settings.TeammateVisible)
+                    self:team_indicator_width(SimpleCompass.settings.TeamIndicatorWidth)
+                    self:offset_y(SimpleCompass.settings.HUDOffsetY)
+				end,
+			},
+		},
+		true
+	)
 end
 
 Hooks:Add("MenuComponentManagerInitialize", "SimpleCompass.MenuComponentManagerInitialize", function(self)

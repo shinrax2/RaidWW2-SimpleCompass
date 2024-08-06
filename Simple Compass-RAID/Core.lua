@@ -1,12 +1,12 @@
 _G.SimpleCompass = _G.SimpleCompass or class()
 SimpleCompass.path = ModPath
 SimpleCompass.data_path = SavePath .. "simple_compass.json"
-SimpleCompass.settings = {
+SimpleCompass.default_settings = {
 	HUDOffsetY = 0,
 	TeamIndicatorWidth = 5,
 	TeammateVisible = true
 }
-
+SimpleCompass.settings = clone(SimpleCompass.default_settings)
 function SimpleCompass:init(panel)
 	self:Load()
 	self._panel = panel:panel({
