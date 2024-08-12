@@ -7,6 +7,11 @@ SimpleCompass.default_settings = {
 	TeammateVisible = true
 }
 SimpleCompass.settings = clone(SimpleCompass.default_settings)
+
+local level_offsets = {
+	["radio_defense"] = 90
+}
+
 function SimpleCompass:init(panel)
 	self:Load()
 	self._panel = panel:panel({
@@ -98,7 +103,7 @@ function SimpleCompass:set_direction_text(panel, text)
 end
 
 function SimpleCompass:update(t, dt)
-	local offset = 90
+	local offset = managers.raid_job and level_offsets[managers.raid_job:current_job()] or 0
 	local current_camera = managers.viewport:get_current_camera()
 	if current_camera then
 		local camera = current_camera
