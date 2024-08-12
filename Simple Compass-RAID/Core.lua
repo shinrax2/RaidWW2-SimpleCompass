@@ -63,9 +63,9 @@ function SimpleCompass:init(panel)
 				valign = "center",
 				align = "center",
 				halign = "center",
-				font = tweak_data.gui.font_paths.lato[18],
+				font = "ui/fonts/pf_din_text_comp_pro_medium_outlined_18",
 				text = tostring(i*self._num),
-				font_size = 14
+				font_size = 15
 			})
 
 			rect:set_center_x(compass:w() / 2)
@@ -80,7 +80,7 @@ function SimpleCompass:set_direction_text(panel, text)
 		valign = "center",
 		align = "center",
 		halign = "center",
-		font = tweak_data.gui.font_paths.lato[18],
+		font = "ui/fonts/pf_din_text_comp_pro_medium_outlined_18",
 		color = Color.yellow,
 		text = text,
 		font_size = 15
