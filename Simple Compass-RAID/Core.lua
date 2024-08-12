@@ -102,7 +102,7 @@ function SimpleCompass:update(t, dt)
 	local current_camera = managers.viewport:get_current_camera()
 	if current_camera then
 		local camera = current_camera
-		local yaw = camera:rotation():yaw() + offset
+		local yaw = camera:rotation():yaw() - offset
 		local camera_rot_x = yaw < 0 and yaw or yaw - 360
 
 		for i = 0, 23 do
@@ -124,7 +124,7 @@ function SimpleCompass:update(t, dt)
 		if self.settings.TeammateVisible then
 			for _, data in pairs(self._teammate) do
 				local look_at_x = camera_rot_x -
-					Rotation:look_at(camera:position(), data.unit:position(), Vector3(0, 0, 1)):yaw() - offset
+					Rotation:look_at(camera:position(), data.unit:position(), Vector3(0, 0, 1)):yaw() + offset
 				local team_pos_x = self._spacing / self._num * look_at_x + self._center_x
 
 				if team_pos_x > self._right_shift - 10 then
