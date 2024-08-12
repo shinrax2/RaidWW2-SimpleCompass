@@ -3,5 +3,7 @@
 
 	"menu_simple_compass_offset_y" : "HUD Y Offset",
 	"menu_simple_compass_teammate_visible" : "Teammate Indicators Visibility",
-	"menu_simple_compass_team_indicator_width" : "Teammate Indicator Width"
+	"menu_simple_compass_team_indicator_width" : "Teammate Indicator Width",
+	"menu_simple_compass_reset" : "Default options",
+	"menu_simple_compass_reset_confirm" : "Are you sure, you want to reset all SimpleCompass options to their default value?"
 }
