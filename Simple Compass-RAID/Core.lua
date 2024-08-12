@@ -60,52 +60,62 @@ function SimpleCompass:init(panel)
 
 			local text = compass:text({
 				vertical = "center",
-				valign = "center",
+				valign = "bottom",
 				align = "center",
 				halign = "center",
-				font = "ui/fonts/pf_din_text_comp_pro_medium_outlined_18",
-				text = tostring(i*self._num),
-				font_size = 15
+				font = tweak_data.gui.fonts.din_compressed_outlined_20,
+				text = tostring(i * self._num),
+				font_size = 16,
 			})
 
 			rect:set_center_x(compass:w() / 2)
 			rect:set_top(compass:center_y())
-			text:set_center(rect:center_x(), rect:bottom()+10)
+			text:set_center(rect:center_x(), rect:bottom() + 10)
 		end
 	end
 end
 
 function SimpleCompass:set_direction_text(panel, text)
+	local rect = panel:rect({
+		color = Color.yellow,
+		w = 3,
+		h = 4
+	})
+
 	local text_panel = panel:text({ -- N, S, E, W
-		valign = "center",
+		vertical = "center",
+		valign = "bottom",
 		align = "center",
 		halign = "center",
-		font = "ui/fonts/pf_din_text_comp_pro_medium_outlined_18",
+		font = tweak_data.gui.fonts.din_compressed_outlined_20,
 		color = Color.yellow,
 		text = text,
-		font_size = 15
+		font_size = 18,
 	})
-	text_panel:set_center_x(panel:w() / 2)
-	text_panel:set_top(panel:h() / 2)
+	rect:set_center_x(panel:w() / 2)
+	rect:set_top(panel:center_y())
+	text_panel:set_center(rect:center_x(), rect:bottom() + 10)
 end
 
 function SimpleCompass:update(t, dt)
+	local offset = 90
 	local current_camera = managers.viewport:get_current_camera()
 	if current_camera then
 		local camera = current_camera
-		local yaw = camera:rotation():yaw()
+		local yaw = camera:rotation():yaw() + offset
 		local camera_rot_x = yaw < 0 and yaw or yaw - 360
 
 		for i = 0, 23 do
 			local pos_x = self._spacing / self._num * camera_rot_x + i * self._spacing + self._center_x
-			if pos_x > self._right_shift  - 10 then
+			if pos_x > self._right_shift - 10 then
 				pos_x = pos_x - self._right_shift
 			elseif pos_x < -340 then
 				pos_x = pos_x + 340 + self._panel:w()
 			end
 
 			local left_shift = -math.abs(self._center_x - pos_x)
-			local pos_y = (left_shift < -self._spacing*2 and (left_shift + self._spacing*2) / 50 or 0) + self._center_y
+			local pos_y = (left_shift < -self._spacing * 2 and (left_shift + self._spacing * 2) / 50 or 0) +
+				self._center_y
 			local compass_hud = self._panel:child("compass" .. tostring(i))
 			compass_hud:set_center_x(pos_x)
 			compass_hud:set_center_y(pos_y)
@@ -113,7 +123,8 @@ function SimpleCompass:update(t, dt)
 
 		if self.settings.TeammateVisible then
 			for _, data in pairs(self._teammate) do
-				local look_at_x = camera_rot_x - Rotation:look_at(camera:position(), data.unit:position(), Vector3(0, 0, 1)):yaw()
+				local look_at_x = camera_rot_x -
+					Rotation:look_at(camera:position(), data.unit:position(), Vector3(0, 0, 1)):yaw() - offset
 				local team_pos_x = self._spacing / self._num * look_at_x + self._center_x
 
 				if team_pos_x > self._right_shift - 10 then
@@ -123,7 +134,8 @@ function SimpleCompass:update(t, dt)
 				end
 
 				local left_shift = -math.abs(self._center_x - team_pos_x)
-				local team_pos_y = (left_shift < -self._spacing*2 and (left_shift + self._spacing*2) / 50 or 0) + self._center_y
+				local team_pos_y = (left_shift < -self._spacing * 2 and (left_shift + self._spacing * 2) / 50 or 0) +
+					self._center_y
 				data.panel:set_center_x(team_pos_x)
 				data.panel:set_center_y(team_pos_y)
 			end
@@ -151,6 +163,7 @@ function SimpleCompass:set_team_indicator_width(value)
 		end
 	end
 end
+
 function SimpleCompass:Load()
 	local file = io.open(self.data_path, "r")
 	if file then
