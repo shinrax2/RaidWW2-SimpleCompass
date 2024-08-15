@@ -5,5 +5,7 @@
 	"menu_simple_compass_teammate_visible" : "Team Indikatoren Sichtbar",
 	"menu_simple_compass_team_indicator_width" : "Team Indikatoren Breite",
 	"menu_simple_compass_reset" : "Standardoptionen",
-	"menu_simple_compass_reset_confirm" : "Bist du dir sicher, dass du alle SimpleCompass Optionen auf Standardwerte setzen möchtest?"
+	"menu_simple_compass_reset_confirm" : "Bist du dir sicher, dass du alle SimpleCompass Optionen auf Standardwerte setzen möchtest?",
+	"menu_simple_compass_numbers_visible" : "Numerische Indikatoren Sichtbar",
+	"menu_simple_compass_letters_visible" : "Richtungs-Indikatoren Sichtbar"
 }

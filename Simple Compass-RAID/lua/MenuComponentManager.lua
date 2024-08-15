@@ -11,6 +11,18 @@ function SimpleCompassMenu:Init(root)
         value = SimpleCompass.settings.TeammateVisible,
         callback = callback(self, self, "teammate_visible")
     })
+    self:Toggle({
+        name = "numbers_visible",
+        text = "menu_simple_compass_numbers_visible",
+        value = SimpleCompass.settings.NumbersVisible,
+        callback = callback(self, self, "numbers_visible")
+    })
+    self:Toggle({
+        name = "letters_visible",
+        text = "menu_simple_compass_letters_visible",
+        value = SimpleCompass.settings.LettersVisible,
+        callback = callback(self, self, "letters_visible")
+    })
     self:Slider({
         name = "offset_y",
         text = "menu_simple_compass_offset_y",
@@ -51,6 +63,19 @@ function SimpleCompassMenu:teammate_visible(value)
     end
 end
 
+function SimpleCompassMenu:letters_visible(value)
+    SimpleCompass.settings.LettersVisible = value
+    if managers.hud then
+        managers.hud._compass:set_letters_visible(value)
+    end
+end
+function SimpleCompassMenu:numbers_visible(value)
+SimpleCompass.settings.NumbersVisible = value
+if managers.hud then
+    managers.hud._compass:set_numbers_visible(value)
+end
+end
+
 function SimpleCompassMenu:offset_y(value)
     SimpleCompass.settings.HUDOffsetY = value
     if managers.hud then
@@ -83,6 +108,8 @@ function SimpleCompassMenu:Reset(value, item)
                     self:teammate_visible(SimpleCompass.settings.TeammateVisible)
                     self:team_indicator_width(SimpleCompass.settings.TeamIndicatorWidth)
                     self:offset_y(SimpleCompass.settings.HUDOffsetY)
+                    self:letters_visible(SimpleCompass.settings.LettersVisible)
+                    self:numbers_visible(SimpleCompass.settings.NumbersVisible)
 				end,
 			},
 		},

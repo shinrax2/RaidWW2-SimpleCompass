@@ -4,7 +4,9 @@ SimpleCompass.data_path = SavePath .. "simple_compass.json"
 SimpleCompass.default_settings = {
 	HUDOffsetY = 0,
 	TeamIndicatorWidth = 5,
-	TeammateVisible = true
+	TeammateVisible = true,
+	NumbersVisible = true,
+	LettersVisible = true
 }
 SimpleCompass.settings = clone(SimpleCompass.default_settings)
 
@@ -50,10 +52,16 @@ function SimpleCompass:init(panel)
 
 		if i == 0 then
 			self:set_direction_text(compass, "N")
+		elseif i == 3 then
+			self:set_direction_text(compass, "NE")
 		elseif i == 6 then
 			self:set_direction_text(compass, "E")
+		elseif i == 9 then
+			self:set_direction_text(compass, "SE")
 		elseif i == 12 then
 			self:set_direction_text(compass, "S")
+		elseif i == 15 then
+			self:set_direction_text(compass, "SW")
 		elseif i == 18 then
 			self:set_direction_text(compass, "W")
 		else
@@ -62,8 +70,8 @@ function SimpleCompass:init(panel)
 				w = 1,
 				h = 4
 			})
-
 			local text = compass:text({
+				name = "compass_number",
 				vertical = "center",
 				valign = "bottom",
 				align = "center",
@@ -71,6 +79,7 @@ function SimpleCompass:init(panel)
 				font = tweak_data.gui.fonts.din_compressed_outlined_20,
 				text = tostring(i * self._num),
 				font_size = 16,
+				visible = self.settings.NumbersVisible
 			})
 
 			rect:set_center_x(compass:w() / 2)
@@ -88,6 +97,7 @@ function SimpleCompass:set_direction_text(panel, text)
 	})
 
 	local text_panel = panel:text({ -- N, S, E, W
+		name = "compass_letter",
 		vertical = "center",
 		valign = "bottom",
 		align = "center",
@@ -96,6 +106,7 @@ function SimpleCompass:set_direction_text(panel, text)
 		color = Color.yellow,
 		text = text,
 		font_size = 18,
+		visible = self.settings.LettersVisible
 	})
 	rect:set_center_x(panel:w() / 2)
 	rect:set_top(panel:center_y())
@@ -103,7 +114,7 @@ function SimpleCompass:set_direction_text(panel, text)
 end
 
 function SimpleCompass:update(t, dt)
-	local offset = managers.raid_job and level_offsets[managers.raid_job:current_job()] or 0
+	local offset = managers.raid_job and level_offsets[managers.raid_job:current_job_id()] or 0
 	local current_camera = managers.viewport:get_current_camera()
 	if current_camera then
 		local camera = current_camera
@@ -152,6 +163,26 @@ function SimpleCompass:set_teammate_panel_visible(value)
 	if self._teammate then
 		for _, data in pairs(self._teammate) do
 			data.panel:set_visible(value)
+		end
+	end
+end
+
+function SimpleCompass:set_numbers_visible(value)
+	local list = {1, 2, 4, 5, 7, 8, 10, 11, 13, 14, 16, 17, 19, 20, 21, 22, 23}
+	for _, i in ipairs(list) do
+		local compass_hud = self._panel:child("compass" .. i):child("compass_number")
+		if compass_hud then
+			compass_hud:set_visible(value)
+		end
+	end
+end
+
+function SimpleCompass:set_letters_visible(value)
+	local list = {0, 3, 6, 9, 12, 15, 18}
+	for _, i in ipairs(list) do
+		local compass_hud = self._panel:child("compass" .. i):child("compass_letter")
+		if compass_hud then
+			compass_hud:set_visible(value)
 		end
 	end
 end
