@@ -17,7 +17,7 @@ function SimpleCompassMenu:Init(root)
         value = SimpleCompass.settings.HUDOffsetY,
         min = -100,
         max = 1000,
-        step = 1,
+        value_format = "%.0f",
         callback = callback(self, self, "offset_y")
     })
     self:Slider({
@@ -26,7 +26,7 @@ function SimpleCompassMenu:Init(root)
         value = SimpleCompass.settings.TeamIndicatorWidth,
         min = 1,
         max = 10,
-        step = 1,
+        value_format = "%.0f",
         callback = callback(self, self, "team_indicator_width")
     })
     self:LongRoundedButton2({
