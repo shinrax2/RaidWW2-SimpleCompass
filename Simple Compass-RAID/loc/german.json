@@ -7,5 +7,10 @@
 	"menu_simple_compass_reset" : "Standardoptionen",
 	"menu_simple_compass_reset_confirm" : "Bist du dir sicher, dass du alle SimpleCompass Optionen auf Standardwerte setzen möchtest?",
 	"menu_simple_compass_numbers_visible" : "Numerische Indikatoren Sichtbar",
-	"menu_simple_compass_letters_visible" : "Richtungs-Indikatoren Sichtbar"
+	"menu_simple_compass_letters_visible" : "Richtungs-Indikatoren Sichtbar",
+	"menu_simple_compass_teammate_visible_desc" : "Zeige Punkte für Teammitglieder auf dem Kompass",
+	"menu_simple_compass_numbers_visible_desc" : "Zeige numerische Indikatoren auf dem Kompass",
+	"menu_simple_compass_letters_visible_desc" : "Zeige Richtungs-Indikatoren auf dem Kompass, zB. N,E,S,W,NE,SE,SW,NW",
+	"menu_simple_compass_offset_y_desc" : "Kompass-Versatz auf der Y-Achse (hoch/runter)",
+	"menu_simple_compass_team_indicator_width_desc" : "Breite der Teammitglieds-Indikatoren"
 }

@@ -6,6 +6,11 @@
 	"menu_simple_compass_team_indicator_width" : "Teammate Indicator Width",
 	"menu_simple_compass_reset" : "Default options",
 	"menu_simple_compass_reset_confirm" : "Are you sure, you want to reset all SimpleCompass options to their default value?",
-	"menu_simple_compass_numbers_visible" : "",
-	"menu_simple_compass_letters_visible" : ""
+	"menu_simple_compass_numbers_visible" : "Numerical Indicator Visibility",
+	"menu_simple_compass_letters_visible" : "Direction Indicator Visibility",
+	"menu_simple_compass_teammate_visible_desc" : "Show dots for teammates on the compass",
+	"menu_simple_compass_numbers_visible_desc" : "Show numerical indicators on the compass",
+	"menu_simple_compass_letters_visible_desc" : "Show directional indicators on the compass, eg. N,E,S,W,NE,SE,SW,NW",
+	"menu_simple_compass_offset_y_desc" : "Compass offset in the Y-Axis (up/down)",
+	"menu_simple_compass_team_indicator_width_desc" : "Width of teammate indicators"
 }

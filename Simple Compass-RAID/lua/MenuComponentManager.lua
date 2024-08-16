@@ -9,19 +9,22 @@ function SimpleCompassMenu:Init(root)
         name = "teammate_visible",
         text = "menu_simple_compass_teammate_visible",
         value = SimpleCompass.settings.TeammateVisible,
-        callback = callback(self, self, "teammate_visible")
+        callback = callback(self, self, "teammate_visible"),
+        desc = "menu_simple_compass_teammate_visible_desc"
     })
     self:Toggle({
         name = "numbers_visible",
         text = "menu_simple_compass_numbers_visible",
         value = SimpleCompass.settings.NumbersVisible,
-        callback = callback(self, self, "numbers_visible")
+        callback = callback(self, self, "numbers_visible"),
+        desc = "menu_simple_compass_numbers_visible_desc"
     })
     self:Toggle({
         name = "letters_visible",
         text = "menu_simple_compass_letters_visible",
         value = SimpleCompass.settings.LettersVisible,
-        callback = callback(self, self, "letters_visible")
+        callback = callback(self, self, "letters_visible"),
+        desc = "menu_simple_compass_letters_visible_desc"
     })
     self:Slider({
         name = "offset_y",
@@ -30,7 +33,8 @@ function SimpleCompassMenu:Init(root)
         min = -100,
         max = 1000,
         value_format = "%.0f",
-        callback = callback(self, self, "offset_y")
+        callback = callback(self, self, "offset_y"),
+        desc = "menu_simple_compass_offset_y_desc"
     })
     self:Slider({
         name = "teammate_indicator_width",
@@ -39,12 +43,12 @@ function SimpleCompassMenu:Init(root)
         min = 1,
         max = 10,
         value_format = "%.0f",
-        callback = callback(self, self, "team_indicator_width")
+        callback = callback(self, self, "team_indicator_width"),
+        desc = "menu_simple_compass_team_indicator_width_desc"
     })
     self:LongRoundedButton2({
 		name = "reset",
 		text = "menu_simple_compass_reset",
-		localize = true,
 		callback = callback(self, self, "Reset"),
 		ignore_align = true,
 		y = 832,
