@@ -6,9 +6,31 @@ SimpleCompass.default_settings = {
 	TeamIndicatorWidth = 5,
 	TeammateVisible = true,
 	NumbersVisible = true,
-	LettersVisible = true
+	LettersVisible = true,
+	LettersSecondaryVisible = true,
+	NumbersColor = "white",
+	LettersColor = "yellow",
+	LettersSecondaryColor = "light_red"
 }
 SimpleCompass.settings = clone(SimpleCompass.default_settings)
+SimpleCompass.color_table = { -- gracefully stolen from WolfgangHUD with love
+	{ color = '#FFFFFF', name = "white" },
+	{ color = '#F2F250', name = "light_yellow" },
+	{ color = '#F2C24E', name = "light_orange" },
+	{ color = '#E55858', name = "light_red" },
+	{ color = '#CC55CC', name = "light_purple" },
+	{ color = '#00FF00', name = "light_green" },
+	{ color = '#00FFFF', name = "light_blue" },
+	{ color = '#BABABA', name = "light_gray" },
+	{ color = '#FFFF00', name = "yellow" },
+	{ color = '#FFA500', name = "orange" },
+	{ color = '#FF0000', name = "red" },
+	{ color = '#800080', name = "purple" },
+	{ color = '#008000', name = "green" },
+	{ color = '#0000FF', name = "blue" },
+	{ color = '#808080', name = "gray" },
+	{ color = '#000000', name = "black" }
+}
 
 local level_offsets = {
 	["radio_defense"] = 90
@@ -50,23 +72,26 @@ function SimpleCompass:init(panel)
 
 		compass:set_center(self._center_x, self._center_y)
 
-		if i == 0 then
-			self:set_direction_text(compass, "N")
-		elseif i == 3 then
-			self:set_direction_text(compass, "NE")
-		elseif i == 6 then
-			self:set_direction_text(compass, "E")
-		elseif i == 9 then
-			self:set_direction_text(compass, "SE")
-		elseif i == 12 then
-			self:set_direction_text(compass, "S")
-		elseif i == 15 then
-			self:set_direction_text(compass, "SW")
-		elseif i == 18 then
-			self:set_direction_text(compass, "W")
+		if i == 0 and self.settings.LettersVisible then
+			self:set_direction_text_main(compass, "N")
+		elseif i == 3 and self.settings.LettersSecondaryVisible then
+			self:set_direction_text_secondary(compass, "NE")
+		elseif i == 6 and self.settings.LettersVisible then
+			self:set_direction_text_main(compass, "E")
+		elseif i == 9 and self.settings.LettersSecondaryVisible then
+			self:set_direction_text_secondary(compass, "SE")
+		elseif i == 12 and self.settings.LettersVisible then
+			self:set_direction_text_main(compass, "S")
+		elseif i == 15 and self.settings.LettersSecondaryVisible then
+			self:set_direction_text_secondary(compass, "SW")
+		elseif i == 18 and self.settings.LettersVisible then
+			self:set_direction_text_main(compass, "W")
+		elseif i == 21 and self.settings.LettersSecondaryVisible then
+			self:set_direction_text_secondary(compass, "NW")
 		else
 			local rect = compass:rect({
-				color = Color.white,
+				name = "compass_number_rect",
+				color = Color:from_hex(self:get_color(self.settings.NumbersColor)),
 				w = 1,
 				h = 4
 			})
@@ -76,6 +101,7 @@ function SimpleCompass:init(panel)
 				valign = "bottom",
 				align = "center",
 				halign = "center",
+				color = Color:from_hex(self:get_color(self.settings.NumbersColor)),
 				font = tweak_data.gui.fonts.din_compressed_outlined_20,
 				text = tostring(i * self._num),
 				font_size = 16,
@@ -89,24 +115,50 @@ function SimpleCompass:init(panel)
 	end
 end
 
-function SimpleCompass:set_direction_text(panel, text)
+function SimpleCompass:set_direction_text_main(panel, text)
 	local rect = panel:rect({
-		color = Color.yellow,
+		name = "compass_letter_main_rect",
+		color = Color:from_hex(self:get_color(self.settings.LettersColor)),
 		w = 3,
 		h = 4
 	})
 
 	local text_panel = panel:text({ -- N, S, E, W
-		name = "compass_letter",
+		name = "compass_letter_main",
 		vertical = "center",
 		valign = "bottom",
 		align = "center",
 		halign = "center",
 		font = tweak_data.gui.fonts.din_compressed_outlined_20,
-		color = Color.yellow,
+		color = Color:from_hex(self:get_color(self.settings.LettersColor)),
 		text = text,
 		font_size = 18,
 		visible = self.settings.LettersVisible
+	})
+	rect:set_center_x(panel:w() / 2)
+	rect:set_top(panel:center_y())
+	text_panel:set_center(rect:center_x(), rect:bottom() + 10)
+end
+
+function SimpleCompass:set_direction_text_secondary(panel, text)
+	local rect = panel:rect({
+		name = "compass_letter_secondary_rect",
+		color = Color:from_hex(self:get_color(self.settings.LettersSecondaryColor)),
+		w = 2,
+		h = 4
+	})
+
+	local text_panel = panel:text({ -- NW, NE, SW, SE
+		name = "compass_letter_secondary",
+		vertical = "center",
+		valign = "bottom",
+		align = "center",
+		halign = "center",
+		font = tweak_data.gui.fonts.din_compressed_outlined_20,
+		color = Color:from_hex(self:get_color(self.settings.LettersSecondaryColor)),
+		text = text,
+		font_size = 16,
+		visible = self.settings.LettersSecondaryVisible
 	})
 	rect:set_center_x(panel:w() / 2)
 	rect:set_top(panel:center_y())
@@ -168,7 +220,7 @@ function SimpleCompass:set_teammate_panel_visible(value)
 end
 
 function SimpleCompass:set_numbers_visible(value)
-	local list = {1, 2, 4, 5, 7, 8, 10, 11, 13, 14, 16, 17, 19, 20, 21, 22, 23}
+	local list = {1, 2, 4, 5, 7, 8, 10, 11, 13, 14, 16, 17, 19, 20, 22, 23}
 	for _, i in ipairs(list) do
 		local compass_hud = self._panel:child("compass" .. i):child("compass_number")
 		if compass_hud then
@@ -177,12 +229,68 @@ function SimpleCompass:set_numbers_visible(value)
 	end
 end
 
-function SimpleCompass:set_letters_visible(value)
-	local list = {0, 3, 6, 9, 12, 15, 18}
+function SimpleCompass:set_numbers_color(value)
+	local list = {1, 2, 4, 5, 7, 8, 10, 11, 13, 14, 16, 17, 19, 20, 22, 23}
 	for _, i in ipairs(list) do
-		local compass_hud = self._panel:child("compass" .. i):child("compass_letter")
+		local compass_hud = self._panel:child("compass" .. i):child("compass_number")
+		if compass_hud then
+			compass_hud:set_color(Color:from_hex(self:get_color(value)))
+		end
+		local compass_hud = self._panel:child("compass" .. i):child("compass_number_rect")
+		if compass_hud then
+			compass_hud:set_color(Color:from_hex(self:get_color(value)))
+		end
+	end
+end
+
+function SimpleCompass:set_letters_main_color(value)
+	local list = {0, 6, 12, 18}
+	for _, i in ipairs(list) do
+		local compass_hud = self._panel:child("compass" .. i):child("compass_letter_main")
+		if compass_hud then
+			compass_hud:set_color(Color:from_hex(self:get_color(value)))
+		end
+		local compass_hud = self._panel:child("compass" .. i):child("compass_letter_main_rect")
+		if compass_hud then
+			compass_hud:set_color(Color:from_hex(self:get_color(value)))
+		end
+	end
+end
+
+function SimpleCompass:set_letters_secondary_color(value)
+	local list = {3, 9, 15, 21}
+	for _, i in ipairs(list) do
+		local compass_hud = self._panel:child("compass" .. i):child("compass_letter_secondary")
+		if compass_hud then
+			compass_hud:set_color(Color:from_hex(self:get_color(value)))
+		end
+		local compass_hud = self._panel:child("compass" .. i):child("compass_letter_secondary_rect")
+		if compass_hud then
+			compass_hud:set_color(Color:from_hex(self:get_color(value)))
+		end
+	end
+end
+
+function SimpleCompass:set_letters_secondary_visible(value)
+	local list = {3, 9, 15, 21}
+	for _, i in ipairs(list) do
+		local compass_hud = self._panel:child("compass" .. i):child("compass_letter_secondary")
 		if compass_hud then
 			compass_hud:set_visible(value)
+		end
+	end
+end
+
+function SimpleCompass:set_letters_main_visible(value)
+	local list = {0, 6, 12, 18}
+	for _, i in ipairs(list) do
+		local compass_hud = self._panel:child("compass" .. i):child("compass_letter_main")
+		if compass_hud then
+			compass_hud:set_color(Color:from_hex(self:get_color(value)))
+		end
+		local compass_hud = self._panel:child("compass" .. i):child("compass_letter_main_rect")
+		if compass_hud then
+			compass_hud:set_color(Color:from_hex(self:get_color(value)))
 		end
 	end
 end
@@ -198,6 +306,18 @@ function SimpleCompass:set_team_indicator_width(value)
 			data.panel:child("compass_teammate_rect"):set_width(value)
 		end
 	end
+end
+
+function SimpleCompass:get_color(color_name)
+	local color = "#000000"
+	if color_name and color_name ~= "" then
+		for _, v in ipairs(self.color_table) do
+			if v.name == color_name then
+				color = v.color
+			end
+		end
+	end
+	return color
 end
 
 function SimpleCompass:Load()
