@@ -3,9 +3,10 @@ Hooks:PostHook(GroupAIStateBase, "register_criminal", "GTFO_Compass_Teammate_Pan
 	if unit:base().is_local_player then
 		return
 	end
-	
-	local key = unit:key()
-	if managers.hud._compass then
+	if unit then
+		local key = unit:key()
+	end
+	if managers.hud._compass and key then
 		managers.hud._compass._teammate[key] = {
 			unit = unit,
 			panel = managers.hud._compass._panel:panel({
@@ -20,8 +21,8 @@ Hooks:PostHook(GroupAIStateBase, "register_criminal", "GTFO_Compass_Teammate_Pan
 		
 		local teammate_rect = teammate_panel:rect({ -- team dots
 			name = "compass_teammate_rect",
-			w = managers.hud._compass.settings.TeamIndicatorWidth,
-			h = 5
+			w = managers.hud._compass.settings.TeamIndicatorWidth * managers.hud._compass.settings.Scale,
+			h = 5  * managers.hud._compass.settings.Scale
 		})
 		
 		teammate_rect:set_center_x(teammate_panel:w() / 2)

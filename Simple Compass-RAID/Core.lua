@@ -200,11 +200,11 @@ function SimpleCompass:update(t, dt)
 
 				if team_pos_x > self._right_shift - 10 then
 					team_pos_x = team_pos_x - self._right_shift
-				elseif team_pos_x < -340 then
-					team_pos_x = team_pos_x + 340 + self._panel:w()
+				elseif team_pos_x < -340 * self.settings.Scale then
+					team_pos_x = team_pos_x + 340 * self.settings.Scale + self._panel:w()
 				end
 
-				local left_shift = -math.abs(self._center_x - team_pos_x)
+				local left_shift = -math.abs(self._center_x - team_pos_x) * self.settings.Scale
 				local team_pos_y = (left_shift < -self._spacing * 2 and (left_shift + self._spacing * 2) / 50 or 0) +
 					self._center_y
 				data.panel:set_center_x(team_pos_x)
