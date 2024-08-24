@@ -23,6 +23,36 @@ function SimpleCompassMenu:Init(root)
     self:Title({
         text = "menu_simple_compass_title"
     })
+    self:Slider({
+        name = "scale",
+        text = "menu_simple_compass_scale",
+        value = SimpleCompass.settings.Scale,
+        min = 0.7,
+        max = 2.5,
+        value_format = "%.1f",
+        callback = callback(self, self, "scale"),
+        desc = "menu_simple_compass_scale_desc"
+    })
+    self:Slider({
+        name = "alpha",
+        text = "menu_simple_compass_alpha",
+        value = SimpleCompass.settings.Alpha,
+        min = 0.3,
+        max = 1,
+        value_format = "%.1f",
+        callback = callback(self, self, "alpha"),
+        desc = "menu_simple_compass_alpha_desc"
+    })
+    self:Slider({
+        name = "offset_y",
+        text = "menu_simple_compass_offset_y",
+        value = SimpleCompass.settings.HUDOffsetY,
+        min = -60,
+        max = 1000,
+        value_format = "%.0f",
+        callback = callback(self, self, "offset_y"),
+        desc = "menu_simple_compass_offset_y_desc"
+    })
     self:Toggle({
         name = "numbers_visible",
         text = "menu_simple_compass_numbers_visible",
@@ -67,16 +97,6 @@ function SimpleCompassMenu:Init(root)
         value = SimpleCompass.settings.LettersSecondaryColor,
         items = color_select_items,
         desc = "menu_simple_compass_menu_letters_secondary_color_desc"
-    })
-    self:Slider({
-        name = "offset_y",
-        text = "menu_simple_compass_offset_y",
-        value = SimpleCompass.settings.HUDOffsetY,
-        min = -60,
-        max = 1000,
-        value_format = "%.0f",
-        callback = callback(self, self, "offset_y"),
-        desc = "menu_simple_compass_offset_y_desc"
     })
     self:Toggle({
         name = "teammate_visible",
@@ -165,6 +185,17 @@ function SimpleCompassMenu:offset_y(value)
     end
 end
 
+function SimpleCompassMenu:scale(value)
+    SimpleCompass.settings.Scale = value
+end
+
+function SimpleCompassMenu:alpha(value)
+    SimpleCompass.settings.Alpha = value
+    if managers.hud then
+        managers.hud._compass:set_compass_alpha(value)
+    end
+end
+
 function SimpleCompassMenu:team_indicator_width(value)
     SimpleCompass.settings.TeamIndicatorWidth = value
     if managers.hud then
@@ -185,7 +216,6 @@ function SimpleCompassMenu:Reset(value, item)
 				text = managers.localization:text("dialog_yes"),
 				callback = function()
                     SimpleCompass.settings = clone(SimpleCompass.default_settings)
-                    self:ReloadMenu()
                     SimpleCompass:Save()
                     self:teammate_visible(SimpleCompass.settings.TeammateVisible)
                     self:team_indicator_width(SimpleCompass.settings.TeamIndicatorWidth)
@@ -196,6 +226,9 @@ function SimpleCompassMenu:Reset(value, item)
                     self:numbers_color({value = SimpleCompass.settings.NumbersColor})
                     self:letters_secondary_color({value = SimpleCompass.settings.LettersSecondaryColor})
                     self:letters_color({value = SimpleCompass.settings.LettersColor})
+                    self:scale(SimpleCompass.settings.Scale)
+                    self:alpha(SimpleCompass.settings.Alpha)
+                    self:ReloadMenu()
 				end,
 			},
 		},

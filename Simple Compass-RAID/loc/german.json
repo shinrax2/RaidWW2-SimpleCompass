@@ -11,8 +11,8 @@
 	"menu_simple_compass_letters_secondary_visible" : "Nebenrichtungs-Indikatoren Sichtbar",
 	"menu_simple_compass_teammate_visible_desc" : "Zeige Punkte für Teammitglieder auf dem Kompass",
 	"menu_simple_compass_numbers_visible_desc" : "Zeige numerische Indikatoren auf dem Kompass",
-	"menu_simple_compass_letters_visible_desc" : "Zeige Hauptrichtungs-Indikatoren auf dem Kompass, zB. N, E, S, W (BENÖTIGT NEUSTART DES AKTUELLEN LEVELS ZUR ANWENDUNG)",
-	"menu_simple_compass_letters_secondary_visible_desc" : "Zeige Nebenrichtungs-Indikatoren auf dem Kompass, zB. NE, NW, SE, SW (BENÖTIGT NEUSTART DES AKTUELLEN LEVELS ZUR ANWENDUNG)",
+	"menu_simple_compass_letters_visible_desc" : "Zeige Hauptrichtungs-Indikatoren auf dem Kompass, zB. N, E, S, W (BENÖTIGT NEUSTART DES AKTUELLEN LEVELS ZUR ANWENDUNG!)",
+	"menu_simple_compass_letters_secondary_visible_desc" : "Zeige Nebenrichtungs-Indikatoren auf dem Kompass, zB. NE, NW, SE, SW (BENÖTIGT NEUSTART DES AKTUELLEN LEVELS ZUR ANWENDUNG!)",
 	"menu_simple_compass_offset_y_desc" : "Kompass-Versatz auf der Y-Achse (hoch/runter)",
 	"menu_simple_compass_team_indicator_width_desc" : "Breite der Teammitglieds-Indikatoren",
 	"menu_simple_compass_color_white" : "Weiß",
@@ -33,5 +33,9 @@
 	"menu_simple_compass_color_black" : "Schwarz",
 	"menu_simple_compass_menu_numbers_color" : "Farbe der numerischen Indikatoren",
 	"menu_simple_compass_menu_letters_color" : "Farbe der Hauptrichtungs-Indikatoren",
-	"menu_simple_compass_menu_letters_secondary_color" : "Farbe der Nebenrichtungs-Indikatoren"
+	"menu_simple_compass_menu_letters_secondary_color" : "Farbe der Nebenrichtungs-Indikatoren",
+	"menu_simple_compass_scale" : "Maßstab",
+	"menu_simple_compass_scale_desc" : "Maßstab des Kompasses, 1 = 100% (BENÖTIGT NEUSTART DES AKTUELLEN LEVELS ZUR ANWENDUNG!)",
+	"menu_simple_compass_alpha" : "Deckkraft",
+	"menu_simple_compass_alpha_desc" : "Deckkraft des Kompasses, 0 = Keine Deckkraft, 1 = Volle Deckkraft"
 }

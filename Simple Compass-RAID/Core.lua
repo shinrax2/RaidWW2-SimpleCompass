@@ -10,7 +10,9 @@ SimpleCompass.default_settings = {
 	LettersSecondaryVisible = true,
 	NumbersColor = "white",
 	LettersColor = "yellow",
-	LettersSecondaryColor = "light_red"
+	LettersSecondaryColor = "light_red",
+	Scale = 1,
+	Alpha = 1
 }
 SimpleCompass.settings = clone(SimpleCompass.default_settings)
 SimpleCompass.color_table = { -- gracefully stolen from WolfgangHUD with love
@@ -40,20 +42,21 @@ function SimpleCompass:init(panel)
 	self:Load()
 	self._panel = panel:panel({
 		layer = 100,
-		w = 500,
-		h = 50
+		w = 500 * self.settings.Scale,
+		h = 50 * self.settings.Scale,
+		alpha = self.settings.Alpha
 	})
 
 	self._center_x = self._panel:w() / 2
 	self._center_y = self._panel:h() / 2
 
-	local indicator = self._panel:rect({
+	local indicator = self._panel:rect({ --player indicator
 		color = Color.white,
-		w = 3,
-		h = 6
+		w = 3 * self.settings.Scale,
+		h = 6 * self.settings.Scale
 	})
 
-	self._spacing = 35
+	self._spacing = 35 * self.settings.Scale
 	self._num = 15
 	self._right_shift = 24 * self._spacing
 
@@ -92,8 +95,8 @@ function SimpleCompass:init(panel)
 			local rect = compass:rect({
 				name = "compass_number_rect",
 				color = Color:from_hex(self:get_color(self.settings.NumbersColor)),
-				w = 1,
-				h = 4
+				w = 1 * self.settings.Scale,
+				h = 4 * self.settings.Scale
 			})
 			local text = compass:text({
 				name = "compass_number",
@@ -104,7 +107,7 @@ function SimpleCompass:init(panel)
 				color = Color:from_hex(self:get_color(self.settings.NumbersColor)),
 				font = tweak_data.gui.fonts.din_compressed_outlined_20,
 				text = tostring(i * self._num),
-				font_size = 16,
+				font_size = 16 * self.settings.Scale,
 				visible = self.settings.NumbersVisible
 			})
 
@@ -119,8 +122,8 @@ function SimpleCompass:set_direction_text_main(panel, text)
 	local rect = panel:rect({
 		name = "compass_letter_main_rect",
 		color = Color:from_hex(self:get_color(self.settings.LettersColor)),
-		w = 3,
-		h = 4
+		w = 3 * self.settings.Scale,
+		h = 4 * self.settings.Scale
 	})
 
 	local text_panel = panel:text({ -- N, S, E, W
@@ -132,7 +135,7 @@ function SimpleCompass:set_direction_text_main(panel, text)
 		font = tweak_data.gui.fonts.din_compressed_outlined_20,
 		color = Color:from_hex(self:get_color(self.settings.LettersColor)),
 		text = text,
-		font_size = 18,
+		font_size = 18 * self.settings.Scale,
 		visible = self.settings.LettersVisible
 	})
 	rect:set_center_x(panel:w() / 2)
@@ -144,8 +147,8 @@ function SimpleCompass:set_direction_text_secondary(panel, text)
 	local rect = panel:rect({
 		name = "compass_letter_secondary_rect",
 		color = Color:from_hex(self:get_color(self.settings.LettersSecondaryColor)),
-		w = 2,
-		h = 4
+		w = 2 * self.settings.Scale,
+		h = 4 * self.settings.Scale
 	})
 
 	local text_panel = panel:text({ -- NW, NE, SW, SE
@@ -157,7 +160,7 @@ function SimpleCompass:set_direction_text_secondary(panel, text)
 		font = tweak_data.gui.fonts.din_compressed_outlined_20,
 		color = Color:from_hex(self:get_color(self.settings.LettersSecondaryColor)),
 		text = text,
-		font_size = 16,
+		font_size = 16 * self.settings.Scale,
 		visible = self.settings.LettersSecondaryVisible
 	})
 	rect:set_center_x(panel:w() / 2)
@@ -318,6 +321,12 @@ function SimpleCompass:get_color(color_name)
 		end
 	end
 	return color
+end
+
+function SimpleCompass:set_compass_alpha(value)
+	if self._panel then
+		self._panel:set_alpha(value)
+	end
 end
 
 function SimpleCompass:Load()

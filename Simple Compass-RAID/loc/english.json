@@ -33,5 +33,9 @@
 	"menu_simple_compass_color_black" : "Black",
 	"menu_simple_compass_menu_numbers_color" : "Color of numerical indicators",
 	"menu_simple_compass_menu_letters_color" : "Color of main directional indicators",
-	"menu_simple_compass_menu_letters_secondary_color" : "Color of secondary directional indicators"
+	"menu_simple_compass_menu_letters_secondary_color" : "Color of secondary directional indicators",
+	"menu_simple_compass_scale" : "Scale",
+	"menu_simple_compass_scale_desc" : "Scale of the compass, 1 = 100% (REQUIRES RESTART OF CURRENT LEVEL TO APPLY!)",
+	"menu_simple_compass_alpha" : "Opaqueness",
+	"menu_simple_compass_alpha_desc" : "Opaqueness of the compass, 0 = Non-Opaque, 1 = Opaque"
 }
