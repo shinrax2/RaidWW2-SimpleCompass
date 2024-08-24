@@ -10,7 +10,7 @@
 	<auto_updates
 		provider="modworkshop"
 		id="48285"
-		version="7"
+		version="8"
 	/>
 
 	<hooks>
