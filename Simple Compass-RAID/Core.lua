@@ -180,11 +180,11 @@ function SimpleCompass:update(t, dt)
 			local pos_x = self._spacing / self._num * camera_rot_x + i * self._spacing + self._center_x
 			if pos_x > self._right_shift - 10 then
 				pos_x = pos_x - self._right_shift
-			elseif pos_x < -340 then
-				pos_x = pos_x + 340 + self._panel:w()
+			elseif pos_x < -340 * self.settings.Scale then
+				pos_x = pos_x + 340 * self.settings.Scale + self._panel:w()
 			end
 
-			local left_shift = -math.abs(self._center_x - pos_x)
+			local left_shift = -math.abs(self._center_x - pos_x) * self.settings.Scale
 			local pos_y = (left_shift < -self._spacing * 2 and (left_shift + self._spacing * 2) / 50 or 0) +
 				self._center_y
 			local compass_hud = self._panel:child("compass" .. tostring(i))
