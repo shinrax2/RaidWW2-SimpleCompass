@@ -27,8 +27,8 @@ function SimpleCompassMenu:Init(root)
         name = "scale",
         text = "menu_simple_compass_scale",
         value = SimpleCompass.settings.Scale,
-        min = 0.7,
-        max = 2.5,
+        min = 0.5,
+        max = 5,
         value_format = "%.1f",
         callback = callback(self, self, "scale"),
         desc = "menu_simple_compass_scale_desc"
@@ -47,8 +47,8 @@ function SimpleCompassMenu:Init(root)
         name = "offset_y",
         text = "menu_simple_compass_offset_y",
         value = SimpleCompass.settings.HUDOffsetY,
-        min = -60,
-        max = 1000,
+        min = -120,
+        max = 2000,
         value_format = "%.0f",
         callback = callback(self, self, "offset_y"),
         desc = "menu_simple_compass_offset_y_desc"
@@ -62,11 +62,11 @@ function SimpleCompassMenu:Init(root)
     })
     self:MultiChoice({
         name = "numbers_color",
-        text = "menu_simple_compass_menu_numbers_color",
+        text = "menu_simple_compass_numbers_color",
         callback = callback(self, self, "numbers_color"),
         value = SimpleCompass.settings.NumbersColor,
         items = color_select_items,
-        desc = "menu_simple_compass_menu_numbers_color_desc"
+        desc = "menu_simple_compass_numbers_color_desc"
     })
     self:Toggle({
         name = "letters_visible",
@@ -77,11 +77,11 @@ function SimpleCompassMenu:Init(root)
     })
     self:MultiChoice({
         name = "letters_color",
-        text = "menu_simple_compass_menu_letters_color",
+        text = "menu_simple_compass_letters_color",
         callback = callback(self, self, "letters_color"),
         value = SimpleCompass.settings.LettersColor,
         items = color_select_items,
-        desc = "menu_simple_compass_menu_letters_color_desc"
+        desc = "menu_simple_compass_letters_color_desc"
     })
     self:Toggle({
         name = "letters_secondary_visible",
@@ -92,11 +92,11 @@ function SimpleCompassMenu:Init(root)
     })
     self:MultiChoice({
         name = "letters_secondary_color",
-        text = "menu_simple_compass_menu_letters_secondary_color",
+        text = "menu_simple_compass_letters_secondary_color",
         callback = callback(self, self, "letters_secondary_color"),
         value = SimpleCompass.settings.LettersSecondaryColor,
         items = color_select_items,
-        desc = "menu_simple_compass_menu_letters_secondary_color_desc"
+        desc = "menu_simple_compass_letters_secondary_color_desc"
     })
     self:Toggle({
         name = "teammate_visible",
@@ -114,6 +114,31 @@ function SimpleCompassMenu:Init(root)
         value_format = "%.0f",
         callback = callback(self, self, "team_indicator_width"),
         desc = "menu_simple_compass_team_indicator_width_desc"
+    })
+    self:Toggle({
+        name = "objectives_visible",
+        text = "menu_simple_compass_objectives_visible",
+        value = SimpleCompass.settings.ObjectivesVisible,
+        callback = callback(self, self, "objectives_visible"),
+        desc = "menu_simple_compass_objectives_visible_desc"
+    })
+    self:Slider({
+        name = "objectives_indicator_width",
+        text = "menu_simple_compass_objectives_indicator_width",
+        value = SimpleCompass.settings.ObjectivesWidth,
+        min = 1,
+        max = 10,
+        value_format = "%.0f",
+        callback = callback(self, self, "objectives_indicator_width"),
+        desc = "menu_simple_compass_objectives_indicator_width_desc"
+    })
+    self:MultiChoice({
+        name = "objectives_color",
+        text = "menu_simple_compass_objectives_color",
+        callback = callback(self, self, "objectives_color"),
+        value = SimpleCompass.settings.ObjectivesColor,
+        items = color_select_items,
+        desc = "menu_simple_compass_objectives_color_desc"
     })
     self:LongRoundedButton2({
 		name = "reset",
@@ -203,6 +228,27 @@ function SimpleCompassMenu:team_indicator_width(value)
     end
 end
 
+function SimpleCompassMenu:objectives_visible(value)
+    SimpleCompass.settings.ObjectivesVisible = value
+    if managers.hud then
+        managers.hud._compass:set_objectives_visible(value)
+    end
+end
+
+function SimpleCompassMenu:objectives_indicator_width(value)
+    SimpleCompass.settings.ObjectivesWidth = value
+    if managers.hud then
+        managers.hud._compass:set_objectives_indicator_width(value)
+    end
+end
+
+function SimpleCompassMenu:objectives_color(selected, item)
+    SimpleCompass.settings.ObjectivesColor = selected.value
+    if managers.hud then
+        managers.hud._compass:set_objectives_color(selected.value)
+    end
+end
+
 function SimpleCompassMenu:Reset(value, item)
 	QuickMenu:new(
 		managers.localization:text("menu_simple_compass_reset"),
@@ -228,6 +274,9 @@ function SimpleCompassMenu:Reset(value, item)
                     self:letters_color({value = SimpleCompass.settings.LettersColor})
                     self:scale(SimpleCompass.settings.Scale)
                     self:alpha(SimpleCompass.settings.Alpha)
+                    self:objectives_color({value = SimpleCompass.settings.ObjectivesColor})
+                    self:objectives_indicator_width(SimpleCompass.settings.ObjectivesWidth)
+                    self:objectives_visible(SimpleCompass.settings.ObjectivesVisible)
                     self:ReloadMenu()
 				end,
 			},

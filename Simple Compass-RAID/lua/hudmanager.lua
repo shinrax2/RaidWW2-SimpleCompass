@@ -9,3 +9,14 @@ end)
 Hooks:PostHook(HUDManager, "update", "GTFO_Compass_Update", function(self, t, dt)
 	self._compass:update(t, dt)
 end)
+
+Hooks:PostHook(HUDManager, "add_waypoint", "GTFO_Compass_Add_Waypoint", function(self, id, data)
+	if self._compass then
+		self._compass:_add_waypoint(id, data)
+	end
+end)
+Hooks:PostHook(HUDManager, "remove_waypoint", "GTFO_Compass_Remove_Waypoint", function(self, id)
+	if self._compass then
+		self._compass:_remove_waypoint(id)
+	end
+end)

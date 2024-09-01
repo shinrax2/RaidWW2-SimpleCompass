@@ -31,11 +31,17 @@
 	"menu_simple_compass_color_blue" : "Blau",
 	"menu_simple_compass_color_gray" : "Grau",
 	"menu_simple_compass_color_black" : "Schwarz",
-	"menu_simple_compass_menu_numbers_color" : "Farbe der numerischen Indikatoren",
-	"menu_simple_compass_menu_letters_color" : "Farbe der Hauptrichtungs-Indikatoren",
-	"menu_simple_compass_menu_letters_secondary_color" : "Farbe der Nebenrichtungs-Indikatoren",
+	"menu_simple_compass_numbers_color" : "Farbe der numerischen Indikatoren",
+	"menu_simple_compass_letters_color" : "Farbe der Hauptrichtungs-Indikatoren",
+	"menu_simple_compass_letters_secondary_color" : "Farbe der Nebenrichtungs-Indikatoren",
 	"menu_simple_compass_scale" : "Maßstab",
 	"menu_simple_compass_scale_desc" : "Maßstab des Kompasses, 1 = 100% (BENÖTIGT NEUSTART DES AKTUELLEN LEVELS ZUR ANWENDUNG!)",
 	"menu_simple_compass_alpha" : "Deckkraft",
-	"menu_simple_compass_alpha_desc" : "Deckkraft des Kompasses, 0 = Keine Deckkraft, 1 = Volle Deckkraft"
+	"menu_simple_compass_alpha_desc" : "Deckkraft des Kompasses, 0 = Keine Deckkraft, 1 = Volle Deckkraft",
+	"menu_simple_compass_objectives_color" : "",
+	"menu_simple_compass_objectives_color_desc" : "",
+	"menu_simple_compass_objectives_indicator_width" : "",
+	"menu_simple_compass_objectives_indicator_width_desc" : "",
+	"menu_simple_compass_objectives_visible" : "",
+	"menu_simple_compass_objectives_visible_desc" : ""
 }

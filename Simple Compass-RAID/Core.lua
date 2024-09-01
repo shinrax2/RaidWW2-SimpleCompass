@@ -8,6 +8,9 @@ SimpleCompass.default_settings = {
 	NumbersVisible = true,
 	LettersVisible = true,
 	LettersSecondaryVisible = true,
+	ObjectivesVisible = true,
+	ObjectivesColor = "blue",
+	ObjectivesWidth = 5,
 	NumbersColor = "white",
 	LettersColor = "yellow",
 	LettersSecondaryColor = "light_red",
@@ -40,6 +43,15 @@ local level_offsets = {
 
 function SimpleCompass:init(panel)
 	self:Load()
+
+	self._waypoints = {}
+	self._teammate = {}
+	self._spacing = 35 * self.settings.Scale
+	self._num = 15
+	self._right_shift = 24 * self._spacing
+	self._objective_height = 10
+	self._teammate_height = 5
+
 	self._panel = panel:panel({
 		layer = 100,
 		w = 500 * self.settings.Scale,
@@ -56,15 +68,9 @@ function SimpleCompass:init(panel)
 		h = 6 * self.settings.Scale
 	})
 
-	self._spacing = 35 * self.settings.Scale
-	self._num = 15
-	self._right_shift = 24 * self._spacing
-
 	self._panel:set_center(panel:center_x(), panel:top() + 60 + self.settings.HUDOffsetY)
 	indicator:set_center_x(self._panel:w() / 2)
 	indicator:set_bottom(self._panel:h())
-	self._teammate = {}
-	self.criminals_num = 0
 
 	for i = 0, 23 do
 		local compass = self._panel:panel({
@@ -211,12 +217,32 @@ function SimpleCompass:update(t, dt)
 				data.panel:set_center_y(team_pos_y)
 			end
 		end
+
+		if self.settings.ObjectivesVisible then
+			for _, data in pairs(self._waypoints) do
+				local look_at_x = camera_rot_x -
+					Rotation:look_at(camera:position(), data.pos, Vector3(0, 0, 1)):yaw() + offset
+				local obj_pos_x = self._spacing / self._num * look_at_x + self._center_x
+
+				if obj_pos_x > self._right_shift - 10 then
+					obj_pos_x = obj_pos_x - self._right_shift
+				elseif obj_pos_x < -340 * self.settings.Scale then
+					obj_pos_x = obj_pos_x + 340 * self.settings.Scale + self._panel:w()
+				end
+
+				local left_shift = -math.abs(self._center_x - obj_pos_x) * self.settings.Scale
+				local obj_pos_y = (left_shift < -self._spacing * 2 and (left_shift + self._spacing * 2) / 50 or 0) +
+					self._center_y
+				data.panel:set_center_x(obj_pos_x)
+				data.panel:set_center_y(obj_pos_y)
+			end
+		end
 	end
 end
 
 function SimpleCompass:set_teammate_panel_visible(value)
 	if self._teammate then
-		for _, data in pairs(self._teammate) do
+		for _, data in ipairs(self._teammate) do
 			data.panel:set_visible(value)
 		end
 	end
@@ -305,8 +331,8 @@ end
 
 function SimpleCompass:set_team_indicator_width(value)
 	if self._teammate then
-		for _, data in pairs(self._teammate) do
-			data.panel:child("compass_teammate_rect"):set_width(value)
+		for _, data in ipairs(self._teammate) do
+			data.panel:child("compass_teammate_rect"):set_width(value * self.settings.Scale)
 		end
 	end
 end
@@ -316,7 +342,7 @@ function SimpleCompass:get_color(color_name)
 	if color_name and color_name ~= "" then
 		for _, v in ipairs(self.color_table) do
 			if v.name == color_name then
-				color = v.color
+				return v.color
 			end
 		end
 	end
@@ -345,5 +371,71 @@ function SimpleCompass:Save()
 	if file then
 		file:write(json.encode(self.settings))
 		file:close()
+	end
+end
+
+function SimpleCompass:_remove_waypoint(id)
+	if id then
+		local hud_panel = managers.hud:script(PlayerBase.INGAME_HUD_FULLSCREEN).panel
+		if hud_panel and self._waypoints[id] then
+			local data = self._waypoints[id]
+			data.panel:set_visible(false)
+			hud_panel:remove(data.panel)
+			self._waypoints[id] = nil
+		end
+	end
+end
+
+function SimpleCompass:_add_waypoint(id, data)
+	if id and data then
+		--if self._waypoints[id] then
+		--	self:_remove_waypoint(id)
+		--end
+		self._waypoints[id] = {
+			pos = data.position,
+			id = id,
+			panel = self._panel:panel({
+				visible = self.settings.ObjectivesVisible,
+				w = self._spacing,
+				h = self._panel:h()
+			})
+		}
+
+		local objective_panel = self._waypoints[id].panel
+		objective_panel:set_center(self._center_x, self._center_y)
+		
+		local objective_rect = objective_panel:rect({ -- 
+			name = "compass_objective_rect",
+			w = self.settings.ObjectivesWidth * self.settings.Scale,
+			h = self._objective_height  * self.settings.Scale
+		})
+		
+		objective_rect:set_center_x(objective_panel:w() / 2)
+		objective_rect:set_bottom(objective_panel:center_y())
+		objective_rect:set_color(Color:from_hex(self:get_color(self.settings.ObjectivesColor)))
+	end
+end
+
+function SimpleCompass:set_objectives_indicator_width(value)
+	if self._waypoints then
+		for _, data in ipairs(self._waypoints) do
+			data.panel:child("compass_objective_rect"):set_width(value * self.settings.Scale)
+		end
+	end
+end
+
+function SimpleCompass:set_objectives_color(value)
+	if self._waypoints then
+		for _, data in ipairs(self._waypoints) do
+			data.panel:child("compass_objective_rect"):set_color(Color:from_hex(self:get_color(value)))
+		end
+	end
+end
+
+function SimpleCompass:set_objectives_visible(value)
+	if self._waypoints then
+		for _, data in ipairs(self._waypoints) do
+			data.panel:set_visible(value)
+		end
 	end
 end
