@@ -11,7 +11,7 @@ Hooks:PostHook(HUDManager, "update", "GTFO_Compass_Update", function(self, t, dt
 end)
 
 Hooks:PostHook(HUDManager, "add_waypoint", "GTFO_Compass_Add_Waypoint", function(self, id, data)
-	if self._compass then
+	if self._compass and data.waypoint_type == "objective" then
 		self._compass:_add_waypoint(id, data)
 	end
 end)

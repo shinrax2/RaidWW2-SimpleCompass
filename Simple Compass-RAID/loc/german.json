@@ -37,11 +37,5 @@
 	"menu_simple_compass_scale" : "Maßstab",
 	"menu_simple_compass_scale_desc" : "Maßstab des Kompasses, 1 = 100% (BENÖTIGT NEUSTART DES AKTUELLEN LEVELS ZUR ANWENDUNG!)",
 	"menu_simple_compass_alpha" : "Deckkraft",
-	"menu_simple_compass_alpha_desc" : "Deckkraft des Kompasses, 0 = Keine Deckkraft, 1 = Volle Deckkraft",
-	"menu_simple_compass_objectives_color" : "",
-	"menu_simple_compass_objectives_color_desc" : "",
-	"menu_simple_compass_objectives_indicator_width" : "",
-	"menu_simple_compass_objectives_indicator_width_desc" : "",
-	"menu_simple_compass_objectives_visible" : "",
-	"menu_simple_compass_objectives_visible_desc" : ""
+	"menu_simple_compass_alpha_desc" : "Deckkraft des Kompasses, 0 = Keine Deckkraft, 1 = Volle Deckkraft"
 }

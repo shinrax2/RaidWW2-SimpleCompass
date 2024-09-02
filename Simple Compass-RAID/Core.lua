@@ -9,7 +9,8 @@ SimpleCompass.default_settings = {
 	LettersVisible = true,
 	LettersSecondaryVisible = true,
 	ObjectivesVisible = true,
-	ObjectivesColor = "blue",
+	ObjectivesColor = "white",
+	ObjectivesIcons = true,
 	ObjectivesWidth = 5,
 	NumbersColor = "white",
 	LettersColor = "yellow",
@@ -388,12 +389,15 @@ end
 
 function SimpleCompass:_add_waypoint(id, data)
 	if id and data then
-		--if self._waypoints[id] then
-		--	self:_remove_waypoint(id)
-		--end
+		if self._waypoints[id] then
+			self:_remove_waypoint(id)
+		end
+		local icon, texture_rect, _ = managers.hud:_get_raid_icon(data.icon)
 		self._waypoints[id] = {
 			pos = data.position,
 			id = id,
+			icon = icon,
+			texture_rect =  texture_rect,
 			panel = self._panel:panel({
 				visible = self.settings.ObjectivesVisible,
 				w = self._spacing,
@@ -402,14 +406,23 @@ function SimpleCompass:_add_waypoint(id, data)
 		}
 
 		local objective_panel = self._waypoints[id].panel
+		local objective_rect
 		objective_panel:set_center(self._center_x, self._center_y)
-		
-		local objective_rect = objective_panel:rect({ -- 
-			name = "compass_objective_rect",
-			w = self.settings.ObjectivesWidth * self.settings.Scale,
-			h = self._objective_height  * self.settings.Scale
-		})
-		
+		if self.settings.ObjectivesIcons then
+			objective_rect = objective_panel:bitmap({ -- 
+				name = "compass_objective_rect",
+				texture = icon,
+				texture_rect = texture_rect,
+				w = texture_rect[3] * 0.6 * self.settings.Scale,
+				h = texture_rect[4] * 0.6 * self.settings.Scale
+			})
+		else
+			objective_rect = objective_panel:rect({ -- 
+				name = "compass_objective_rect",
+				w = self.settings.ObjectivesWidth * self.settings.Scale,
+				h = self._objective_height  * self.settings.Scale
+			})
+		end
 		objective_rect:set_center_x(objective_panel:w() / 2)
 		objective_rect:set_bottom(objective_panel:center_y())
 		objective_rect:set_color(Color:from_hex(self:get_color(self.settings.ObjectivesColor)))
@@ -417,7 +430,7 @@ function SimpleCompass:_add_waypoint(id, data)
 end
 
 function SimpleCompass:set_objectives_indicator_width(value)
-	if self._waypoints then
+	if self._waypoints and not self.settings.ObjectivesIcons then
 		for _, data in ipairs(self._waypoints) do
 			data.panel:child("compass_objective_rect"):set_width(value * self.settings.Scale)
 		end

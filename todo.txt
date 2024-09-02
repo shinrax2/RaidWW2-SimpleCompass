@@ -1,1 +1,1 @@
-function HUDManager:change_waypoint_icon(id, icon) -> icons for waypoints maybee
+nationality icons for teammates

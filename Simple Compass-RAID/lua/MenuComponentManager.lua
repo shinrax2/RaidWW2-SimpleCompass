@@ -122,6 +122,13 @@ function SimpleCompassMenu:Init(root)
         callback = callback(self, self, "objectives_visible"),
         desc = "menu_simple_compass_objectives_visible_desc"
     })
+    self:Toggle({
+        name = "objectives_icons",
+        text = "menu_simple_compass_objectives_icons",
+        value = SimpleCompass.settings.ObjectivesIcons,
+        callback = callback(self, self, "objectives_icons"),
+        desc = "menu_simple_compass_objectives_icons_desc"
+    })
     self:Slider({
         name = "objectives_indicator_width",
         text = "menu_simple_compass_objectives_indicator_width",
@@ -249,6 +256,10 @@ function SimpleCompassMenu:objectives_color(selected, item)
     end
 end
 
+function SimpleCompassMenu:objectives_icons(value)
+    SimpleCompass.settings.ObjectivesIcons = value
+end
+
 function SimpleCompassMenu:Reset(value, item)
 	QuickMenu:new(
 		managers.localization:text("menu_simple_compass_reset"),
@@ -277,6 +288,7 @@ function SimpleCompassMenu:Reset(value, item)
                     self:objectives_color({value = SimpleCompass.settings.ObjectivesColor})
                     self:objectives_indicator_width(SimpleCompass.settings.ObjectivesWidth)
                     self:objectives_visible(SimpleCompass.settings.ObjectivesVisible)
+                    self:objectives_icons(SimpleCompass.settings.ObjectivesIcons)
                     self:ReloadMenu()
 				end,
 			},

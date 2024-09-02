@@ -14,7 +14,7 @@
 	"menu_simple_compass_letters_visible_desc" : "Show main directional indicators on the compass, eg. N, E, S, W (REQUIRES RESTART OF CURRENT LEVEL TO APPLY!)",
 	"menu_simple_compass_letters_secondary_visible_desc" : "Show secondary directional indicators on the compass, eg. NE, SE, SW, NW (REQUIRES RESTART OF CURRENT LEVEL TO APPLY!)",
 	"menu_simple_compass_offset_y_desc" : "Compass offset in the Y-Axis (up/down)",
-	"menu_simple_compass_team_indicator_width_desc" : "Width of teammate indicators",
+	"menu_simple_compass_team_indicator_width_desc" : "Width of teammate indicators (REQUIRES RESTART OF CURRENT LEVEL TO APPLY!)",
 	"menu_simple_compass_color_white" : "White",
 	"menu_simple_compass_color_light_yellow" : "Light Yellow",
 	"menu_simple_compass_color_light_orange" : "Light Orange",
@@ -38,10 +38,12 @@
 	"menu_simple_compass_scale_desc" : "Scale of the compass, 1 = 100% (REQUIRES RESTART OF CURRENT LEVEL TO APPLY!)",
 	"menu_simple_compass_alpha" : "Opaqueness",
 	"menu_simple_compass_alpha_desc" : "Opaqueness of the compass, 0 = Non-Opaque, 1 = Opaque",
-	"menu_simple_compass_objectives_color" : "",
-	"menu_simple_compass_objectives_color_desc" : "",
-	"menu_simple_compass_objectives_indicator_width" : "",
-	"menu_simple_compass_objectives_indicator_width_desc" : "",
-	"menu_simple_compass_objectives_visible" : "",
-	"menu_simple_compass_objectives_visible_desc" : ""
+	"menu_simple_compass_objectives_color" : "Color of Objectives Indicator",
+	"menu_simple_compass_objectives_color_desc" : "(REQUIRES RESTART OF CURRENT LEVEL TO APPLY!)",
+	"menu_simple_compass_objectives_indicator_width" : "Width of Objectives Indicator",
+	"menu_simple_compass_objectives_indicator_width_desc" : "(REQUIRES RESTART OF CURRENT LEVEL TO APPLY!)",
+	"menu_simple_compass_objectives_visible" : "Visibilty of Objectives Indicator",
+	"menu_simple_compass_objectives_visible_desc" : "(REQUIRES RESTART OF CURRENT LEVEL TO APPLY!)",
+	"menu_simple_compass_objectives_icons" : "Objective Icons",
+	"menu_simple_compass_objectives_icons_desc": "Shows Objectives as Icons on the compass instead of dots(IGNORES OBJECTIVES INDICATOR WIDTH SETTING; REQUIRES RESTART OF CURRENT LEVEL TO APPLY!)"
 }
