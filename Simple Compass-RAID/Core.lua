@@ -5,6 +5,7 @@ SimpleCompass.default_settings = {
 	HUDOffsetY = 0,
 	TeamIndicatorWidth = 5,
 	TeammateVisible = true,
+	TeammateIcon = true,
 	NumbersVisible = true,
 	LettersVisible = true,
 	LettersSecondaryVisible = true,

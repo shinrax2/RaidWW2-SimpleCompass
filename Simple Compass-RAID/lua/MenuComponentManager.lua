@@ -105,6 +105,13 @@ function SimpleCompassMenu:Init(root)
         callback = callback(self, self, "teammate_visible"),
         desc = "menu_simple_compass_teammate_visible_desc"
     })
+    self:Toggle({
+        name = "teammate_icon",
+        text = "menu_simple_compass_teammate_icon",
+        value = SimpleCompass.settings.TeammateIcon,
+        callback = callback(self, self, "teammate_icon"),
+        desc = "menu_simple_compass_teammate_icon_desc"
+    })
     self:Slider({
         name = "teammate_indicator_width",
         text = "menu_simple_compass_team_indicator_width",
@@ -260,6 +267,10 @@ function SimpleCompassMenu:objectives_icons(value)
     SimpleCompass.settings.ObjectivesIcons = value
 end
 
+function SimpleCompassMenu:teammate_icon(value)
+    SimpleCompass.settings.TeammateIcon = value
+end
+
 function SimpleCompassMenu:Reset(value, item)
 	QuickMenu:new(
 		managers.localization:text("menu_simple_compass_reset"),
@@ -289,6 +300,7 @@ function SimpleCompassMenu:Reset(value, item)
                     self:objectives_indicator_width(SimpleCompass.settings.ObjectivesWidth)
                     self:objectives_visible(SimpleCompass.settings.ObjectivesVisible)
                     self:objectives_icons(SimpleCompass.settings.ObjectivesIcons)
+                    self:teammate_icon(SimpleCompass.settings.TeammateIcon)
                     self:ReloadMenu()
 				end,
 			},

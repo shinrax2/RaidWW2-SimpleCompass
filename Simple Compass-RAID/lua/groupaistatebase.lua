@@ -20,13 +20,25 @@ Hooks:PostHook(GroupAIStateBase, "register_criminal", "GTFO_Compass_Teammate_Pan
 		
 		local teammate_rect = teammate_panel:rect({ -- team dots
 			name = "compass_teammate_rect",
+			visible = not managers.hud._compass.settings.TeammateIcon,
 			w = managers.hud._compass.settings.TeamIndicatorWidth * managers.hud._compass.settings.Scale,
 			h = managers.hud._compass._teammate_height  * managers.hud._compass.settings.Scale
+		})
+
+		local teammate_icon = teammate_panel:bitmap({ -- team icons
+			name = "compass_teammate_icon",
+			visible = managers.hud._compass.settings.TeammateIcon,
+			w = 32 * 0.6 * managers.hud._compass.settings.Scale,
+			h = 32 * 0.6 * managers.hud._compass.settings.Scale
 		})
 		
 		teammate_rect:set_center_x(teammate_panel:w() / 2)
 		teammate_rect:set_bottom(teammate_panel:center_y())
 		teammate_rect:set_color(tweak_data.chat_colors[#tweak_data.chat_colors]) -- very hacky fix for teamai dots being white sometimes
+
+		teammate_icon:set_center_x(teammate_panel:w() / 2)
+		teammate_icon:set_bottom(teammate_panel:center_y())
+		teammate_icon:set_color(tweak_data.chat_colors[#tweak_data.chat_colors]) -- very hacky fix for teamai dots being white sometimes
 	end
 end)
 
