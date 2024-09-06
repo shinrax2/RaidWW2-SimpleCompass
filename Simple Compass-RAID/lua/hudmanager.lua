@@ -21,7 +21,7 @@ Hooks:PostHook(HUDManager, "remove_waypoint", "GTFO_Compass_Remove_Waypoint", fu
 	end
 end)
 
-Hooks:PostHook(HUDManager, "add_mugshot", "GTFO_add_mugshot", function(self, data)
+Hooks:PostHook(HUDManager, "add_mugshot", "GTFO_Compass_add_mugshot", function(self, data)
 	local ai = managers.criminals:character_data_by_name(data.character_name_id).ai
 	local unit = managers.criminals:character_unit_by_name(data.character_name_id)
 	local color_id = managers.criminals:character_color_id_by_unit(unit)
@@ -32,12 +32,12 @@ Hooks:PostHook(HUDManager, "add_mugshot", "GTFO_add_mugshot", function(self, dat
 	if unit then
 		local k = unit:key()
 		managers.hud._compass._teammate[k].nationality = data.character_name_id
+		local panel = managers.hud._compass._teammate[k].panel
 		if managers.hud._compass.settings.TeammateIcon then
-			local panel = managers.hud._compass._teammate[k].panel
 			local icon = tweak_data.gui:get_full_gui_data("nationality_small_" .. data.character_name_id)
 			panel:child("compass_teammate_icon"):set_image(icon.texture, unpack(icon.texture_rect))
 			panel:child("compass_teammate_icon"):set_color(crim_color)
-			panel:child("compass_teammate_rect"):set_color(crim_color)
 		end
+		panel:child("compass_teammate_rect"):set_color(crim_color)
 	end
 end)
