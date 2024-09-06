@@ -48,11 +48,11 @@ Hooks:PostHook(GroupAIStateBase, "unregister_criminal", "GTFO_Compass_Teammate_P
 	end
 	if managers.hud._compass and unit then
 		local key = unit:key()
-		local hud_panel = managers.hud:script(PlayerBase.INGAME_HUD_FULLSCREEN).panel
-		if hud_panel and managers.hud._compass._teammate[key] then
+		local hud = managers.hud:script(PlayerBase.INGAME_HUD_FULLSCREEN)
+		if hud and hud.panel and managers.hud._compass._teammate[key] then
 			local data = managers.hud._compass._teammate[key]
 			data.panel:set_visible(false)
-			hud_panel:remove(data.panel)
+			hud.panel:remove(data.panel)
 			managers.hud._compass._teammate[key] = nil
 		end
 	end
