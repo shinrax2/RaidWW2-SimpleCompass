@@ -154,6 +154,13 @@ function SimpleCompassMenu:Init(root)
         items = color_select_items,
         desc = "menu_simple_compass_objectives_color_desc"
     })
+    self:Toggle({
+        name = "curve_compass",
+        text = "menu_simple_compass_curve_compass",
+        value = SimpleCompass.settings.CurveCompass,
+        callback = callback(self, self, "curve_compass"),
+        desc = "menu_simple_compass_curve_compass_desc"
+    })
     self:LongRoundedButton2({
 		name = "reset",
 		text = "menu_simple_compass_reset",
@@ -166,6 +173,13 @@ end
 
 function SimpleCompassMenu:Close()
     SimpleCompass:Save()
+end
+
+function SimpleCompassMenu:curve_compass(value)
+    SimpleCompass.settings.CurveCompass = value
+    if managers.hud then
+        managers.hud._compass.settings.CurveCompass = value
+    end
 end
 
 function SimpleCompassMenu:teammate_visible(value)

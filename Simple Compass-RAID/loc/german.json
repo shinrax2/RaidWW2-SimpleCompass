@@ -47,5 +47,7 @@
 	"menu_simple_compass_objectives_icons" : "Zielsymbole",
 	"menu_simple_compass_objectives_icons_desc" : "Zeigt Ziele auf dem Kompass als Symbole statt Punkten(BENÖTIGT NEUSTART DES AKTUELLEN LEVELS ZUR ANWENDUNG!)",
 	"menu_simple_compass_teammate_icon" : "Zeige Teammitglieder-Symbole",
-	"menu_simple_compass_teammate_icon_desc" : "Zeigt Nationalitätssymbole statt Punkten(BENÖTIGT NEUSTART DES AKTUELLEN LEVELS ZUR ANWENDUNG!)"
+	"menu_simple_compass_teammate_icon_desc" : "Zeigt Nationalitätssymbole statt Punkten(BENÖTIGT NEUSTART DES AKTUELLEN LEVELS ZUR ANWENDUNG!)",
+	"menu_simple_compass_curve_compass" : "Biege Kompass",
+	"menu_simple_compass_curve_compass_desc" : "Biegt Kompass zu den Seiten hinten hin nach oben"
 }

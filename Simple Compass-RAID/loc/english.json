@@ -47,5 +47,7 @@
 	"menu_simple_compass_objectives_icons" : "Objective Icons",
 	"menu_simple_compass_objectives_icons_desc" : "Shows Objectives as Icons on the compass instead of dots(REQUIRES RESTART OF CURRENT LEVEL TO APPLY!)",
 	"menu_simple_compass_teammate_icon" : "Show teammate icons",
-	"menu_simple_compass_teammate_icon_desc" : "Uses nationality icons instead of dots (REQUIRES RESTART OF CURRENT LEVEL TO APPLY!)"
+	"menu_simple_compass_teammate_icon_desc" : "Uses nationality icons instead of dots (REQUIRES RESTART OF CURRENT LEVEL TO APPLY!)",
+	"menu_simple_compass_curve_compass" : "Curve Compass",
+	"menu_simple_compass_curve_compass_desc" : "Curve Compass upwards towards the sides"
 }

@@ -17,7 +17,8 @@ SimpleCompass.default_settings = {
 	LettersColor = "yellow",
 	LettersSecondaryColor = "light_red",
 	Scale = 1,
-	Alpha = 1
+	Alpha = 1,
+	CurveCompass = false
 }
 SimpleCompass.settings = clone(SimpleCompass.default_settings)
 SimpleCompass.color_table = { -- gracefully stolen from WolfgangHUD with love
@@ -193,7 +194,7 @@ function SimpleCompass:update(t, dt)
 			end
 
 			local left_shift = -math.abs(self._center_x - pos_x) * self.settings.Scale
-			local pos_y = (left_shift < -self._spacing * 2 and (left_shift + self._spacing * 2) / 50 or 0) + self._center_y
+			local pos_y = (left_shift < -self._spacing * 2 and self.settings.CurveCompass and (left_shift + self._spacing * 2) / 50 or 0) + self._center_y
 			local compass_hud = self._panel:child("compass" .. tostring(i))
 			compass_hud:set_center_x(pos_x)
 			compass_hud:set_center_y(pos_y)
@@ -212,8 +213,7 @@ function SimpleCompass:update(t, dt)
 				end
 
 				local left_shift = -math.abs(self._center_x - team_pos_x) * self.settings.Scale
-				local team_pos_y = (left_shift < -self._spacing * 2 and (left_shift + self._spacing * 2) / 50 or 0) +
-					self._center_y
+				local team_pos_y = (left_shift < -self._spacing * 2 and self.settings.CurveCompass and (left_shift + self._spacing * 2) / 50 or 0) + self._center_y
 				data.panel:set_center_x(team_pos_x)
 				data.panel:set_center_y(team_pos_y)
 			end
@@ -232,8 +232,7 @@ function SimpleCompass:update(t, dt)
 				end
 
 				local left_shift = -math.abs(self._center_x - obj_pos_x) * self.settings.Scale
-				local obj_pos_y = (left_shift < -self._spacing * 2 and (left_shift + self._spacing * 2) / 50 or 0) +
-					self._center_y
+				local obj_pos_y = (left_shift < -self._spacing * 2 and self.settings.CurveCompass and (left_shift + self._spacing * 2) / 50 or 0) + self._center_y
 				data.panel:set_center_x(obj_pos_x)
 				data.panel:set_center_y(obj_pos_y)
 			end
