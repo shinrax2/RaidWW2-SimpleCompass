@@ -22,7 +22,7 @@ Hooks:PostHook(HUDManager, "remove_waypoint", "GTFO_Compass_Remove_Waypoint", fu
 end)
 
 Hooks:PostHook(HUDManager, "add_mugshot", "GTFO_Compass_add_mugshot", function(self, data)
-	local ai = managers.criminals:character_data_by_name(data.character_name_id).ai
+	local ai = managers.criminals:character_data_by_name(data.character_name_id).ai or false
 	local unit = managers.criminals:character_unit_by_name(data.character_name_id)
 	local color_id = managers.criminals:character_color_id_by_unit(unit)
 	if WolfgangHUD then

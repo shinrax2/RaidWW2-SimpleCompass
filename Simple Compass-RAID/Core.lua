@@ -120,8 +120,8 @@ function SimpleCompass:init(panel)
 			})
 
 			rect:set_center_x(compass:w() / 2)
-			rect:set_top(compass:center_y())
-			text:set_center(rect:center_x(), rect:bottom() + 10)
+			rect:set_top(self._center_y)
+			text:set_center(rect:center_x(), rect:bottom() + 10 * self.settings.Scale)
 		end
 	end
 end
@@ -147,8 +147,8 @@ function SimpleCompass:set_direction_text_main(panel, text)
 		visible = self.settings.LettersVisible
 	})
 	rect:set_center_x(panel:w() / 2)
-	rect:set_top(panel:center_y())
-	text_panel:set_center(rect:center_x(), rect:bottom() + 10)
+	rect:set_top(self._center_y)
+	text_panel:set_center(rect:center_x(), rect:bottom() + 10 * self.settings.Scale)
 end
 
 function SimpleCompass:set_direction_text_secondary(panel, text)
@@ -172,8 +172,8 @@ function SimpleCompass:set_direction_text_secondary(panel, text)
 		visible = self.settings.LettersSecondaryVisible
 	})
 	rect:set_center_x(panel:w() / 2)
-	rect:set_top(panel:center_y())
-	text_panel:set_center(rect:center_x(), rect:bottom() + 10)
+	rect:set_top(self._center_y)
+	text_panel:set_center(rect:center_x(), rect:bottom() + 10 * self.settings.Scale)
 end
 
 function SimpleCompass:update(t, dt)
@@ -193,8 +193,7 @@ function SimpleCompass:update(t, dt)
 			end
 
 			local left_shift = -math.abs(self._center_x - pos_x) * self.settings.Scale
-			local pos_y = (left_shift < -self._spacing * 2 and (left_shift + self._spacing * 2) / 50 or 0) +
-				self._center_y
+			local pos_y = (left_shift < -self._spacing * 2 and (left_shift + self._spacing * 2) / 50 or 0) + self._center_y
 			local compass_hud = self._panel:child("compass" .. tostring(i))
 			compass_hud:set_center_x(pos_x)
 			compass_hud:set_center_y(pos_y)
