@@ -45,6 +45,20 @@ local level_offsets = {
 	["radio_defense"] = 90
 }
 
+local function scale_font(f_size)
+	local sizes = { 18, 20, 22, 24, 26, 32, 38, 42}
+	local closest = sizes[1]
+	local dist = math.abs(closest - f_size)
+	for _, v in ipairs(sizes) do
+		local dist2 = math.abs(v - f_size)
+		if dist > dist2 then
+			closest = v
+			dist = dist2
+		end
+	end
+	return closest
+end
+
 function SimpleCompass:init(panel)
 	self:Load()
 
@@ -57,11 +71,17 @@ function SimpleCompass:init(panel)
 	self._teammate_height = 5
 	self._counter_i = 0
 	self._counter_n = self.settings.UpdateFreq
+	self._main_fontsize = 18 * self.settings.Scale
+	self._main_font = tweak_data.gui.fonts["din_compressed_outlined_" .. scale_font(self._main_fontsize)]
+	self._secondary_fontsize = 16 * self.settings.Scale
+	self._secondary_font = tweak_data.gui.fonts["din_compressed_outlined_" .. scale_font(self._secondary_fontsize)]
+	self._numbers_fontsize = 16 * self.settings.Scale
+	self._numbers_font = tweak_data.gui.fonts["din_compressed_outlined_" .. scale_font(self._numbers_fontsize)]
 
 	self._panel = panel:panel({
 		layer = 100,
 		w = 500 * self.settings.Scale,
-		h = 50 * self.settings.Scale,
+		h = 60 * self.settings.Scale,
 		alpha = self.settings.Alpha
 	})
 
@@ -76,7 +96,7 @@ function SimpleCompass:init(panel)
 
 	self._panel:set_center(panel:center_x(), panel:top() + 60 + self.settings.HUDOffsetY)
 	indicator:set_center_x(self._panel:w() / 2)
-	indicator:set_bottom(self._panel:h())
+	indicator:set_bottom(self._panel:h())-- + 5 * self.settings.Scale)
 
 	for i = 0, 23 do
 		local compass = self._panel:panel({
@@ -117,9 +137,9 @@ function SimpleCompass:init(panel)
 				align = "center",
 				halign = "center",
 				color = Color:from_hex(self:get_color(self.settings.NumbersColor)),
-				font = tweak_data.gui.fonts.din_compressed_outlined_20,
+				font = self._numbers_font,
 				text = tostring(i * self._num),
-				font_size = 16 * self.settings.Scale,
+				font_size = self._numbers_fontsize,
 				visible = self.settings.NumbersVisible
 			})
 
@@ -144,10 +164,10 @@ function SimpleCompass:set_direction_text_main(panel, text)
 		valign = "bottom",
 		align = "center",
 		halign = "center",
-		font = tweak_data.gui.fonts.din_compressed_outlined_20,
+		font = self._main_font,
 		color = Color:from_hex(self:get_color(self.settings.LettersColor)),
 		text = text,
-		font_size = 18 * self.settings.Scale,
+		font_size = self._main_fontsize,
 		visible = self.settings.LettersVisible
 	})
 	rect:set_center_x(panel:w() / 2)
@@ -169,10 +189,10 @@ function SimpleCompass:set_direction_text_secondary(panel, text)
 		valign = "bottom",
 		align = "center",
 		halign = "center",
-		font = tweak_data.gui.fonts.din_compressed_outlined_20,
+		font = self._secondary_font,
 		color = Color:from_hex(self:get_color(self.settings.LettersSecondaryColor)),
 		text = text,
-		font_size = 16 * self.settings.Scale,
+		font_size = self._secondary_fontsize,
 		visible = self.settings.LettersSecondaryVisible
 	})
 	rect:set_center_x(panel:w() / 2)
@@ -206,7 +226,7 @@ function SimpleCompass:update(t, dt)
 			end
 
 			if self.settings.TeammateVisible then
-				for _, data in pairs(self._teammate) do
+				for _, data in pairs(self._teammate) do --
 					local look_at_x = camera_rot_x -
 						Rotation:look_at(camera:position(), data.unit:position(), Vector3(0, 0, 1)):yaw() + offset
 					local team_pos_x = self._spacing / self._num * look_at_x + self._center_x
@@ -225,7 +245,7 @@ function SimpleCompass:update(t, dt)
 			end
 
 			if self.settings.ObjectivesVisible then
-				for _, data in pairs(self._waypoints) do
+				for _, data in pairs(self._waypoints) do --
 					local look_at_x = camera_rot_x -
 						Rotation:look_at(camera:position(), data.pos, Vector3(0, 0, 1)):yaw() + offset
 					local obj_pos_x = self._spacing / self._num * look_at_x + self._center_x
