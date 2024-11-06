@@ -201,7 +201,7 @@ function SimpleCompass:update(t, dt)
 		end
 
 		if self.settings.TeammateVisible then
-			for _, data in pairs(self._teammate) do
+			for _, data in ipairs(self._teammate) do
 				local look_at_x = camera_rot_x -
 					Rotation:look_at(camera:position(), data.unit:position(), Vector3(0, 0, 1)):yaw() + offset
 				local team_pos_x = self._spacing / self._num * look_at_x + self._center_x
@@ -220,7 +220,7 @@ function SimpleCompass:update(t, dt)
 		end
 
 		if self.settings.ObjectivesVisible then
-			for _, data in pairs(self._waypoints) do
+			for _, data in ipairs(self._waypoints) do
 				local look_at_x = camera_rot_x -
 					Rotation:look_at(camera:position(), data.pos, Vector3(0, 0, 1)):yaw() + offset
 				local obj_pos_x = self._spacing / self._num * look_at_x + self._center_x
