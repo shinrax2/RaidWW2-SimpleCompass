@@ -49,5 +49,7 @@
 	"menu_simple_compass_teammate_icon" : "Show teammate icons",
 	"menu_simple_compass_teammate_icon_desc" : "Uses nationality icons instead of dots (REQUIRES RESTART OF CURRENT LEVEL TO APPLY!)",
 	"menu_simple_compass_curve_compass" : "Curve Compass",
-	"menu_simple_compass_curve_compass_desc" : "Curve Compass upwards towards the sides"
+	"menu_simple_compass_curve_compass_desc" : "Curve Compass upwards towards the sides",
+	"menu_simple_compass_update_freq" : "Update frequency",
+	"menu_simple_compass_update_freq_desc" : "Compass updates every Nth frame; 1 = Quality, 5 = Performance"
 }

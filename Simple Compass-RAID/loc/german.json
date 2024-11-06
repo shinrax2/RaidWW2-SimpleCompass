@@ -49,5 +49,7 @@
 	"menu_simple_compass_teammate_icon" : "Zeige Teammitglieder-Symbole",
 	"menu_simple_compass_teammate_icon_desc" : "Zeigt Nationalitätssymbole statt Punkten(BENÖTIGT NEUSTART DES AKTUELLEN LEVELS ZUR ANWENDUNG!)",
 	"menu_simple_compass_curve_compass" : "Biege Kompass",
-	"menu_simple_compass_curve_compass_desc" : "Biegt Kompass zu den Seiten hinten hin nach oben"
+	"menu_simple_compass_curve_compass_desc" : "Biegt Kompass zu den Seiten hinten hin nach oben",
+	"menu_simple_compass_update_freq" : "Updatefrequenz",
+	"menu_simple_compass_update_freq_desc" : "Der Kompass aktualisiert alle N Bilder; 1 = Qualität, 5 = Geschwindigkeit"
 }

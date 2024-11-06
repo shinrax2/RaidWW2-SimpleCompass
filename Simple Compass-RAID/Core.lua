@@ -18,7 +18,8 @@ SimpleCompass.default_settings = {
 	LettersSecondaryColor = "light_red",
 	Scale = 1,
 	Alpha = 1,
-	CurveCompass = false
+	CurveCompass = false,
+	UpdateFreq = 1
 }
 SimpleCompass.settings = clone(SimpleCompass.default_settings)
 SimpleCompass.color_table = { -- gracefully stolen from WolfgangHUD with love
@@ -54,6 +55,8 @@ function SimpleCompass:init(panel)
 	self._right_shift = 24 * self._spacing
 	self._objective_height = 10
 	self._teammate_height = 5
+	self._counter_i = 0
+	self._counter_n = self.settings.UpdateFreq
 
 	self._panel = panel:panel({
 		layer = 100,
@@ -104,7 +107,7 @@ function SimpleCompass:init(panel)
 			local rect = compass:rect({
 				name = "compass_number_rect",
 				color = Color:from_hex(self:get_color(self.settings.NumbersColor)),
-				w = 1 * self.settings.Scale,
+				w = 1,
 				h = 4 * self.settings.Scale
 			})
 			local text = compass:text({
@@ -131,7 +134,7 @@ function SimpleCompass:set_direction_text_main(panel, text)
 	local rect = panel:rect({
 		name = "compass_letter_main_rect",
 		color = Color:from_hex(self:get_color(self.settings.LettersColor)),
-		w = 3 * self.settings.Scale,
+		w = 3 ,
 		h = 4 * self.settings.Scale
 	})
 
@@ -156,7 +159,7 @@ function SimpleCompass:set_direction_text_secondary(panel, text)
 	local rect = panel:rect({
 		name = "compass_letter_secondary_rect",
 		color = Color:from_hex(self:get_color(self.settings.LettersSecondaryColor)),
-		w = 2 * self.settings.Scale,
+		w = 2,
 		h = 4 * self.settings.Scale
 	})
 
@@ -180,64 +183,68 @@ end
 function SimpleCompass:update(t, dt)
 	local offset = managers.raid_job and level_offsets[managers.raid_job:current_job_id()] or 0
 	local current_camera = managers.viewport:get_current_camera()
-	if current_camera then
-		local camera = current_camera
-		local yaw = camera:rotation():yaw() - offset
-		local camera_rot_x = yaw < 0 and yaw or yaw - 360
+	if self._counter_n == self._counter_i then
+		self._counter_i = 0
+		if current_camera then
+			local camera = current_camera
+			local yaw = camera:rotation():yaw() - offset
+			local camera_rot_x = yaw < 0 and yaw or yaw - 360
 
-		for i = 0, 23 do
-			local pos_x = self._spacing / self._num * camera_rot_x + i * self._spacing + self._center_x
-			if pos_x > self._right_shift - 10 then
-				pos_x = pos_x - self._right_shift
-			elseif pos_x < -340 * self.settings.Scale then
-				pos_x = pos_x + 340 * self.settings.Scale + self._panel:w()
-			end
-
-			local left_shift = -math.abs(self._center_x - pos_x) * self.settings.Scale
-			local pos_y = (left_shift < -self._spacing * 2 and self.settings.CurveCompass and (left_shift + self._spacing * 2) / 50 or 0) + self._center_y
-			local compass_hud = self._panel:child("compass" .. tostring(i))
-			compass_hud:set_center_x(pos_x)
-			compass_hud:set_center_y(pos_y)
-		end
-
-		if self.settings.TeammateVisible then
-			for _, data in pairs(self._teammate) do
-				local look_at_x = camera_rot_x -
-					Rotation:look_at(camera:position(), data.unit:position(), Vector3(0, 0, 1)):yaw() + offset
-				local team_pos_x = self._spacing / self._num * look_at_x + self._center_x
-
-				if team_pos_x > self._right_shift - 10 then
-					team_pos_x = team_pos_x - self._right_shift
-				elseif team_pos_x < -340 * self.settings.Scale then
-					team_pos_x = team_pos_x + 340 * self.settings.Scale + self._panel:w()
+			for i = 0, 23 do
+				local pos_x = self._spacing / self._num * camera_rot_x + i * self._spacing + self._center_x
+				if pos_x > self._right_shift - 10 then
+					pos_x = pos_x - self._right_shift
+				elseif pos_x < -340 * self.settings.Scale then
+					pos_x = pos_x + 340 * self.settings.Scale + self._panel:w()
 				end
 
-				local left_shift = -math.abs(self._center_x - team_pos_x) * self.settings.Scale
-				local team_pos_y = (left_shift < -self._spacing * 2 and self.settings.CurveCompass and (left_shift + self._spacing * 2) / 50 or 0) + self._center_y
-				data.panel:set_center_x(team_pos_x)
-				data.panel:set_center_y(team_pos_y)
+				local left_shift = -math.abs(self._center_x - pos_x) * self.settings.Scale
+				local pos_y = (left_shift < -self._spacing * 2 and self.settings.CurveCompass and (left_shift + self._spacing * 2) / 50 or 0) + self._center_y
+				local compass_hud = self._panel:child("compass" .. tostring(i))
+				compass_hud:set_center_x(pos_x)
+				compass_hud:set_center_y(pos_y)
 			end
-		end
 
-		if self.settings.ObjectivesVisible then
-			for _, data in pairs(self._waypoints) do
-				local look_at_x = camera_rot_x -
-					Rotation:look_at(camera:position(), data.pos, Vector3(0, 0, 1)):yaw() + offset
-				local obj_pos_x = self._spacing / self._num * look_at_x + self._center_x
+			if self.settings.TeammateVisible then
+				for _, data in pairs(self._teammate) do
+					local look_at_x = camera_rot_x -
+						Rotation:look_at(camera:position(), data.unit:position(), Vector3(0, 0, 1)):yaw() + offset
+					local team_pos_x = self._spacing / self._num * look_at_x + self._center_x
 
-				if obj_pos_x > self._right_shift - 10 then
-					obj_pos_x = obj_pos_x - self._right_shift
-				elseif obj_pos_x < -340 * self.settings.Scale then
-					obj_pos_x = obj_pos_x + 340 * self.settings.Scale + self._panel:w()
+					if team_pos_x > self._right_shift - 10 then
+						team_pos_x = team_pos_x - self._right_shift
+					elseif team_pos_x < -340 * self.settings.Scale then
+						team_pos_x = team_pos_x + 340 * self.settings.Scale + self._panel:w()
+					end
+
+					local left_shift = -math.abs(self._center_x - team_pos_x) * self.settings.Scale
+					local team_pos_y = (left_shift < -self._spacing * 2 and self.settings.CurveCompass and (left_shift + self._spacing * 2) / 50 or 0) + self._center_y
+					data.panel:set_center_x(team_pos_x)
+					data.panel:set_center_y(team_pos_y)
 				end
+			end
 
-				local left_shift = -math.abs(self._center_x - obj_pos_x) * self.settings.Scale
-				local obj_pos_y = (left_shift < -self._spacing * 2 and self.settings.CurveCompass and (left_shift + self._spacing * 2) / 50 or 0) + self._center_y
-				data.panel:set_center_x(obj_pos_x)
-				data.panel:set_center_y(obj_pos_y)
+			if self.settings.ObjectivesVisible then
+				for _, data in pairs(self._waypoints) do
+					local look_at_x = camera_rot_x -
+						Rotation:look_at(camera:position(), data.pos, Vector3(0, 0, 1)):yaw() + offset
+					local obj_pos_x = self._spacing / self._num * look_at_x + self._center_x
+
+					if obj_pos_x > self._right_shift - 10 then
+						obj_pos_x = obj_pos_x - self._right_shift
+					elseif obj_pos_x < -340 * self.settings.Scale then
+						obj_pos_x = obj_pos_x + 340 * self.settings.Scale + self._panel:w()
+					end
+
+					local left_shift = -math.abs(self._center_x - obj_pos_x) * self.settings.Scale
+					local obj_pos_y = (left_shift < -self._spacing * 2 and self.settings.CurveCompass and (left_shift + self._spacing * 2) / 50 or 0) + self._center_y
+					data.panel:set_center_x(obj_pos_x)
+					data.panel:set_center_y(obj_pos_y)
+				end
 			end
 		end
 	end
+	self._counter_i = self._counter_i + 1
 end
 
 function SimpleCompass:set_teammate_panel_visible(value)

@@ -161,6 +161,16 @@ function SimpleCompassMenu:Init(root)
         callback = callback(self, self, "curve_compass"),
         desc = "menu_simple_compass_curve_compass_desc"
     })
+    self:Slider({
+        name = "UpdateFreq",
+        text = "menu_simple_compass_update_freq",
+        value = SimpleCompass.settings.UpdateFreq,
+        min = 1,
+        max = 5,
+        value_format = "%.0f",
+        callback = callback(self, self, "update_freq"),
+        desc = "menu_simple_compass_update_freq_desc"
+    })
     self:LongRoundedButton2({
 		name = "reset",
 		text = "menu_simple_compass_reset",
@@ -173,6 +183,14 @@ end
 
 function SimpleCompassMenu:Close()
     SimpleCompass:Save()
+end
+
+function SimpleCompassMenu:update_freq(value)
+    SimpleCompass.settings.UpdateFreq = value
+    if managers.hud then
+        managers.hud._compass.settings.UpdateFreq = value
+        managers.hud._compass._counter_n = value
+    end
 end
 
 function SimpleCompassMenu:curve_compass(value)
