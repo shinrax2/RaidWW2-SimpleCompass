@@ -4,7 +4,7 @@
     description="Adds simple GTFO-style compass to the game."
     author="shinrax2 and MetroLine"
     contact="https://github.com/shinrax2/RaidWW2-SimpleCompass"
-    version="12"
+    version="13"
     disable_safe_mode="true"
 >
 
