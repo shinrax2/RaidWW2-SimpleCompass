@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+<mod 
+    name="SimpleCompass-RAID"
+    description="Adds simple GTFO-style compass to the game."
+    author="shinrax2 and MetroLine"
+    contact="https://github.com/shinrax2/RaidWW2-SimpleCompass"
+    version="12"
+    disable_safe_mode="true"
+>
+
+    <updates>
+        <update
+            identifier="48285"
+            provider="modworkshop">
+                <misc_data patchnotes_url="https://modworkshop.net/mod/48285?tab=changelog" />
+        </update>
+    </updates>
+
+    <hooks>
+        <post hook_id="lib/managers/hudmanager" script_path="lua/hudmanager.lua" />
+        <post hook_id="lib/managers/group_ai_states/groupaistatebase" script_path="lua/groupaistatebase.lua" />
+        <post hook_id="lib/managers/menu/menucomponentmanager" script_path="lua/MenuComponentManager.lua" />
+        <pre hook_id="lib/entry" script_path="Core.lua" />
+    </hooks>
+
+    <localization directory="loc" default="english.json">
+		<loc file="english.json" language="english" />
+		<loc file="german.json" language="german" />
+	</localization>
+
+</mod>
