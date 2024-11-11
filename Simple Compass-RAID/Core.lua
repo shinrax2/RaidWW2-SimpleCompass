@@ -45,20 +45,6 @@ local level_offsets = {
 	["radio_defense"] = 90
 }
 
-local function scale_font(f_size)
-	local sizes = { 18, 20, 22, 24, 26, 32, 38, 42 }
-	local closest = sizes[1]
-	local dist = math.abs(closest - f_size)
-	for _, v in ipairs(sizes) do
-		local dist2 = math.abs(v - f_size)
-		if dist > dist2 then
-			closest = v
-			dist = dist2
-		end
-	end
-	return closest
-end
-
 function SimpleCompass:init(panel)
 	self:Load()
 
