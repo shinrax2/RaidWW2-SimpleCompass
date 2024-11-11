@@ -46,7 +46,7 @@ local level_offsets = {
 }
 
 local function scale_font(f_size)
-	local sizes = { 18, 20, 22, 24, 26, 32, 38, 42}
+	local sizes = { 18, 20, 22, 24, 26, 32, 38, 42 }
 	local closest = sizes[1]
 	local dist = math.abs(closest - f_size)
 	for _, v in ipairs(sizes) do
@@ -72,11 +72,11 @@ function SimpleCompass:init(panel)
 	self._counter_i = 0
 	self._counter_n = self.settings.UpdateFreq
 	self._main_fontsize = 18 * self.settings.Scale
-	self._main_font = tweak_data.gui.fonts["din_compressed_outlined_" .. scale_font(self._main_fontsize)]
+	self._main_font = Utils.MatchFontToSize(self._main_fontsize, "din_compressed_outlined")
 	self._secondary_fontsize = 16 * self.settings.Scale
-	self._secondary_font = tweak_data.gui.fonts["din_compressed_outlined_" .. scale_font(self._secondary_fontsize)]
+	self._secondary_font = Utils.MatchFontToSize(self._secondary_fontsize, "din_compressed_outlined")
 	self._numbers_fontsize = 16 * self.settings.Scale
-	self._numbers_font = tweak_data.gui.fonts["din_compressed_outlined_" .. scale_font(self._numbers_fontsize)]
+	self._numbers_font = Utils.MatchFontToSize(self._numbers_fontsize, "din_compressed_outlined")
 
 	self._panel = panel:panel({
 		layer = 100,
