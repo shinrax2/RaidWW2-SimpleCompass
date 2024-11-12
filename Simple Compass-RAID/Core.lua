@@ -58,11 +58,11 @@ function SimpleCompass:init(panel)
 	self._counter_i = 0
 	self._counter_n = self.settings.UpdateFreq
 	self._main_fontsize = 18 * self.settings.Scale
-	self._main_font = Utils.MatchFontToSize(self._main_fontsize, "din_compressed_outlined")
+	self._main_font = Utils.GetFontBySize(self._main_fontsize, "din_compressed_outlined")
 	self._secondary_fontsize = 16 * self.settings.Scale
-	self._secondary_font = Utils.MatchFontToSize(self._secondary_fontsize, "din_compressed_outlined")
+	self._secondary_font = Utils.GetFontBySize(self._secondary_fontsize, "din_compressed_outlined")
 	self._numbers_fontsize = 16 * self.settings.Scale
-	self._numbers_font = Utils.MatchFontToSize(self._numbers_fontsize, "din_compressed_outlined")
+	self._numbers_font = Utils.GetFontBySize(self._numbers_fontsize, "din_compressed_outlined")
 
 	self._panel = panel:panel({
 		layer = 100,
