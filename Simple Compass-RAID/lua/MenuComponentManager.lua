@@ -346,6 +346,7 @@ Hooks:Add("MenuComponentManagerInitialize", "SimpleCompass.MenuComponentManagerI
 		name = "SimpleCompass_options",
 		name_id = "menu_simple_compass_title",
 		inject_menu = "blt_options",
+        icon = "machine_gun_full",
 		class = SimpleCompassMenu
 	})
 end)
