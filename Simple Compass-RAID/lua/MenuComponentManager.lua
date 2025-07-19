@@ -345,7 +345,7 @@ Hooks:Add("MenuComponentManagerInitialize", "SimpleCompass.MenuComponentManagerI
 	RaidMenuHelper:CreateMenu({
 		name = "SimpleCompass_options",
 		name_id = "menu_simple_compass_title",
-		inject_menu = "blt_options",
+		inject_list = "blt_options",
         icon = "machine_gun_full",
 		class = SimpleCompassMenu
 	})
